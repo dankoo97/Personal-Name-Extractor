@@ -27,7 +27,6 @@ class DocumentArchives{
 class Archivist {
   -string name
   -string ID
-  -int salary
   +trainPersonalNameExtractor()
   +setName()
   +getName()
