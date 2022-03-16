@@ -40,7 +40,6 @@ class Document{
   +readFile()
   +markPersonalNames()
   +outputDocumentWithMarkedNames()
-  +addAuthor()
   +setDocumentText()
   +getDocumentText()
 }
