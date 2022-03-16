@@ -36,31 +36,11 @@ class Archivist {
 
 class Document{
   -string text
-  -Metadata metadata
   +readFile()
   +markPersonalNames()
   +outputDocumentWithMarkedNames()
   +setDocumentText()
   +getDocumentText()
-}
-class Metadata{
-  -string title
-  -Collection<string> authorNames
-  -string publisher
-  -Collection<string> descriptiveKeyWords
-  -string abstract
-  +setTitle()
-  +getTitle()
-  +addAuthor()
-  +deleteAuthor()
-  +getAuthorNames()
-  +setPublisher()
-  +getPublisher()
-  +addDescriptiveKeyWord()
-  +deleteDescriptiveKeyWord()
-  +getDescriptiveKeyWords()
-  +setAbstract()
-  +getAbstract()
 }
 
 
