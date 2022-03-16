@@ -46,7 +46,7 @@ class Document{
 }
 class Metadata{
   -string title
-  -Collection<AuthorNames>
+  -Collection<string> authorNames
   -string publisher
   -Collection<string> descriptiveKeyWords
   -string abstract
@@ -62,21 +62,6 @@ class Metadata{
   +getDescriptiveKeyWords()
   +setAbstract()
   +getAbstract()
-}
-
-class AuthorNames{
-  -string firstName
-  -string lastName
-  -string middleInitial
-  -string suffix
-  +setFirstName()
-  +getFirstName()
-  +setLastName()
-  +getLastName()
-  +setMiddleInitial()
-  +getMiddleInitial()
-  +setSuffix()
-  +getSuffix()
 }
 
 
