@@ -12,35 +12,14 @@ Team teamname5
 
 title Classes - Class Diagram
 
-class DocumentArchives{
-  -Collection<Archivist>
-  -Collection<Document>
-  +addArchivist()
-  +deleteArchivist()
-  +getArchivists()
-  +addDocument()
-  +deleteDocument()
-  +getDocuments()
-  +findArchivist()
-  +findDocument()
-}
+
 class Archivist {
-  -string name
-  -string ID
   +trainPersonalNameExtractor()
-  +setName()
-  +getName()
-  +setID()
-  +getID()
 }
 
-class Document{
+class Block{
   -string text
-  +readFile()
-  +markPersonalNames()
-  +outputDocumentWithMarkedNames()
-  +setDocumentText()
-  +getDocumentText()
+  + string outputMarkedNames()
 }
 
 
