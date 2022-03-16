@@ -7,10 +7,79 @@ Team teamname5
 
 ### Initial Draft
 
-```
-class Mutant {
-    int id
+@startuml
 
-    getChanges() -> Collection<Change>
+title Classes - Class Diagram
+
+class DocumentArchives{
+  -Collection<Archivist>
+  -Collection<Document>
+  +addArchivist()
+  +deleteArchivist()
+  +getArchivists()
+  +addDocument()
+  +deleteDocument()
+  +getDocuments()
+  +findArchivist()
+  +findDocument()
 }
-```
+class Archivist {
+  -string name
+  -string ID
+  -int salary
+  +trainPersonalNameExtractor()
+  +setName()
+  +getName()
+  +setID()
+  +getID()
+  +setSalary()
+  +getSalary()
+}
+
+class Document{
+  -string text
+  -Metadata metadata
+  +readFile()
+  +markPersonalNames()
+  +outputDocumentWithMarkedNames()
+  +addAuthor()
+  +setDocumentText()
+  +getDocumentText()
+}
+class Metadata{
+  -string title
+  -Collection<AuthorNames>
+  -string publisher
+  -Collection<string> descriptiveKeyWords
+  -string abstract
+  +setTitle()
+  +getTitle()
+  +addAuthor()
+  +deleteAuthor()
+  +getAuthorNames()
+  +setPublisher()
+  +getPublisher()
+  +addDescriptiveKeyWord()
+  +deleteDescriptiveKeyWord()
+  +getDescriptiveKeyWords()
+  +setAbstract()
+  +getAbstract()
+}
+
+class AuthorNames{
+  -string firstName
+  -string lastName
+  -string middleInitial
+  -string suffix
+  +setFirstName()
+  +getFirstName()
+  +setLastName()
+  +getLastName()
+  +setMiddleInitial()
+  +getMiddleInitial()
+  +setSuffix()
+  +getSuffix()
+}
+
+
+@enduml
