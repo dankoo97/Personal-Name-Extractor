@@ -25,7 +25,7 @@ class Block{
 }
 
 class Token{
-  -String text
+  -String rawToken
   - ? tokenClassification
   -Feature features
 }
