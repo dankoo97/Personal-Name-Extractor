@@ -19,9 +19,20 @@ class Archivist {
 
 class Block{
   -string text
+  -Collection<Token> tokens
   + string outputMarkedNames()
+  + separateIntoTokens()
 }
 
+class Token{
+  -String text
+  - ? tokenClassification
+  -Feature features
+}
+
+class Feature{
+  +merge()
+}
 
 @enduml
 ```
