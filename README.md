@@ -32,8 +32,6 @@ class Archivist {
   +getName()
   +setID()
   +getID()
-  +setSalary()
-  +getSalary()
 }
 
 class Document{
