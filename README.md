@@ -31,7 +31,7 @@ class Token{
 }
 
 class Feature{
-  +merge()
+  +merge() 
 }
 
 @enduml
