@@ -27,7 +27,7 @@ class Block{
 
 class Token{
   -String rawToken
-  - bool tokenClassification
+  -boolean tokenClassification
   -FeatureSet features
 }
 
