@@ -28,10 +28,22 @@ class Block{
 class Token{
   -String rawToken
   - ? tokenClassification
-  -Feature features
+  -FeatureSet features
 }
 
 class FeatureSet{
+  bool inDictionary;
+  bool isCityOrState;
+  bool isCountryOrTerritory;
+  bool isPlace;
+  bool isDTICFirstName;
+  bool isDTICLastName;
+  bool isCommonFirstName;
+  bool isCommonLastName;
+  bool isHonorific;
+  bool isPrefix;
+  bool isSuffix;
+  bool killWord;
   +merge() 
 }
 
