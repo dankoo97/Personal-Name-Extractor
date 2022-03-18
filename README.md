@@ -30,7 +30,7 @@ class Token{
   -Feature features
 }
 
-class Feature{
+class FeatureSet{
   +merge() 
 }
 
