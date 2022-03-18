@@ -14,7 +14,8 @@ title Classes - Class Diagram
 
 
 class Archivist {
-  +trainPersonalNameExtractor()
+  +trainArchivist()
+  +extractPersonalNames()
 }
 
 class Block{
