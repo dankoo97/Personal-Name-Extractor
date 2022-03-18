@@ -32,18 +32,7 @@ class Token{
 }
 
 class FeatureSet{
-  bool inDictionary;
-  bool isCityOrState;
-  bool isCountryOrTerritory;
-  bool isPlace;
-  bool isDTICFirstName;
-  bool isDTICLastName;
-  bool isCommonFirstName;
-  bool isCommonLastName;
-  bool isHonorific;
-  bool isPrefix;
-  bool isSuffix;
-  bool killWord;
+  -Collection<int> featureValues   // Enumerated types for POS, bools for things like being member of a set of names
   +merge() 
 }
 
