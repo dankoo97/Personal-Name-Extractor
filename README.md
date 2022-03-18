@@ -27,7 +27,7 @@ class Block{
 
 class Token{
   -String rawToken
-  - ? tokenClassification
+  - bull tokenClassification
   -FeatureSet features
 }
 
