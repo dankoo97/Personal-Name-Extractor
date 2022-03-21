@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class TestBlock {
 
     @Test
-    void testConstructor(String s) {
+    void testConstructor() {
         fail("Not yet implemented");
     }
 

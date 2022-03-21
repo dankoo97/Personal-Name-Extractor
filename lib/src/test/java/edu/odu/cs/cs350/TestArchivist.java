@@ -8,12 +8,12 @@ import java.io.File;
 public class TestArchivist {
 
     @Test
-    void testExtractString(String s) {
+    void testExtractString() {
         fail("Not yet implemented");
     }
 
     @Test
-    void testExtractFile(File f) {
+    void testExtractFile() {
         fail("Not yet implemented");
     }
 
