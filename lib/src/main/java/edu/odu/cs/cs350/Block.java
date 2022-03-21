@@ -7,22 +7,26 @@ public class Block {
     Collection<Token> tokens;
 
     /*
-    * Constructor
-    */
+     * Constructor
+     */
     public Block(String s) {
         text = s;
     }
 
     /*
-    * Outputs marked names within text
-    */
+     * Outputs marked names within text
+     */
     public String outputMarkedNames() {
-        return text;
+        StringBuffer markedUpText = new StringBuffer("<PER>");
+        markedUpText.append(text);
+        markedUpText.append("</PER>");
+
+        return markedUpText.toString();
     }
 
     /*
-    * Separates text into tokens
-    */
+     * Separates text into tokens
+     */
     public void separateIntoTokens() {
 
     }

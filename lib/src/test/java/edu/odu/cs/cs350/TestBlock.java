@@ -13,7 +13,11 @@ public class TestBlock {
 
     @Test
     void testOutputMarkedNames() {
-        fail("Not yet implemented");
+        Block b = new Block("This is my input string");
+        String markedText = b.outputTextWithMarkedNames();
+
+        assertThat(markedText, startsWith("<PER>"));
+        assertThat(markedText, endsWith("</PER>"));
     }
 
     @Test
