@@ -38,7 +38,8 @@ class Archivist {
 //        Given corrected output, train to match
 //
 //        Exit shell
-        return "";
+        return """
+                """;
     }
 
     /*
