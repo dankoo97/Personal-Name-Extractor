@@ -10,11 +10,23 @@ class Archivist {
         if (args.length > 0)
         {
 //            Try to run a command based on user CLI input using switch statement
+//            Possible preliminary commands:
+//                shell
+//                extract-names (file|string|directory)
+//                train (file|string|directory)
+//
 //            If unable, throw Error
         } else {
 //            Open up shell environment
             archivist.shell();
         }
+    }
+
+    /*
+    * Default constructor for class archivist
+    */
+    public Archivist() {
+
     }
 
     public void shell() {
@@ -51,7 +63,6 @@ class Archivist {
 
     /*
     * Attempts to extract personal names from a file f
-    * (Maybe add delimiter parameter to split strings?)
     */
     public String extract(File f) {
 //        Possible options:
