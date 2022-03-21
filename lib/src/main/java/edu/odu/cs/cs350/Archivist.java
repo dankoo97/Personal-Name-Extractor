@@ -51,6 +51,7 @@ class Archivist {
 
     /*
     * Attempts to extract personal names from a file f
+    * (Maybe add delimiter parameter to split strings?)
     */
     public String extract(File f) {
 //        Possible options:
@@ -58,5 +59,12 @@ class Archivist {
 //        2. File is made up of one or more strings properly wrapped by tags
 //        3. File is not a readable text file
         return "";
+    }
+
+    /*
+    * Trains archivist using machine learning
+    */
+    public void trainArchivist(String s) {
+//        Trains machine learning with a corrected string
     }
 }
