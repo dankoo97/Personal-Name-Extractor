@@ -9,7 +9,6 @@ class Archivist {
         if (args.length > 0)
         {
             
-            
 //            Try to run a command based on user CLI input using switch statement
 //            Possible preliminary commands:
 //                shell
@@ -87,10 +86,12 @@ class Archivist {
         return false;
     }
     
-    // Archivist manually corrects incorrect output and returns new output
-       public String correctOutput(String s) 
+    /*
+    * Archivist manually corrects incorrect output and returns new output
+    */
+    public String correctOutput(String s)
     {
-        string newOutput; // corrected string return variable
+        String newOutput = ""; // corrected string return variable
         // get the original string before marked up (so without the <NER> and </NER>)
         String strNotMarked=" ";
         String[] first=s.split("<NER>"); // string without <NER>
