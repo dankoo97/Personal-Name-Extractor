@@ -78,6 +78,13 @@ class Archivist {
     public void trainArchivist(String s) {
 //        Trains machine learning with a corrected string
     }
+
+    /*
+    * Compare a given string to the trained output
+    */
+    public String compareOutput(String s) {
+        return "";
+    }
 }
 
 

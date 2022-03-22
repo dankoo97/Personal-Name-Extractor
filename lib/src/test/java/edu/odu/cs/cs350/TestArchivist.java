@@ -1,9 +1,8 @@
 package edu.odu.cs.cs350;
 
-import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
+import static org.junit.jupiter.api.Assertions.fail;
 
 public class TestArchivist {
 
@@ -21,4 +20,7 @@ public class TestArchivist {
     void testTrainArchivist() {
         fail("Not yet implemented");
     }
+
+    @Test
+    void testCompareOutput() { fail("Not yet implemented"); }
 }
