@@ -14,10 +14,10 @@ public class TestBlock {
     @Test
     void testOutputMarkedNames() {
         Block b = new Block("This is my input string");
-        String markedText = b.outputTextWithMarkedNames();
+        String markedText = b.outputMarkedNames();
 
-        assertThat(markedText, startsWith("<PER>"));
-        assertThat(markedText, endsWith("</PER>"));
+        assertTrue(markedText.startsWith("<PER>"));
+        assertTrue(markedText.endsWith("</PER>"));
     }
 
     @Test
