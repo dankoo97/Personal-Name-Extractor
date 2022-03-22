@@ -88,9 +88,9 @@ class Archivist {
     }
     
     // Archivist manually corrects incorrect output and returns new output
-    public string correctOutput(String s) 
+    public String correctOutput(String s)
     {
-        string newOutput; // corrected string return variable
+        String newOutput = ""; // corrected string return variable
         // placeholders
         // get the original string before marked up (so without the <NER> and </NER>)
         
