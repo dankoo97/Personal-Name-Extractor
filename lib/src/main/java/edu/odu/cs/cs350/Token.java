@@ -5,6 +5,10 @@ public class Token {
     boolean TokenClassification;
     FeatureSet features;
 
+    public Token(String str) {
+        rawToken = str;
+    }
+
     /*
      * returns if token is the beginning of name
      */

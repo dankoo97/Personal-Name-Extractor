@@ -41,6 +41,9 @@ public class Block {
      * Separates text into tokens
      */
     public void separateIntoTokens() {
-
+        // fake data to test Block and Token
+        tokens = new Token[2];
+        tokens[0] = new Token("fake test data");
+        tokens[1] = new Token("more fake tests");
     }
 }
