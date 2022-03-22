@@ -11,6 +11,11 @@ plugins {
     id 'java-library'
 }
 
+java {
+    sourceCompatibility = JavaVersion.toVersion(11)
+    targetCompatibility = JavaVersion.toVersion(11)
+}
+
 repositories {
     // Use Maven Central for resolving dependencies.
     mavenCentral()
@@ -31,5 +36,11 @@ dependencies {
 
 tasks.named('test') {
     // Use JUnit Platform for unit tests.
+    ignoreFailures = true
     useJUnitPlatform()
+}
+
+task train {
+    // train Archivist class
+
 }
