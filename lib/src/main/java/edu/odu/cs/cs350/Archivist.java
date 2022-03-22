@@ -80,10 +80,11 @@ class Archivist {
     }
 
     /*
-    * Compare a given string to the trained output
+    * Compare a given string to the trained output and
+    * return true if they match, else false
     */
-    public String compareOutput(String s) {
-        return "";
+    public boolean compareOutput(String s) {
+        return false;
     }
 }
 
