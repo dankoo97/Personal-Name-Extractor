@@ -108,16 +108,7 @@ class Archivist {
 
    
 
-/// A test code that could run a command to get user CLI input 
 
-class GetUserInput {
-    public static void main(String args[])
-          {
-    Scanner myObj = new Scanner(System.in);  // Create a Scanner object
-    System.out.println("What name do you want to extract");
 
-    String nameExtaction = myObj.nextLine();  // Read the user input
-    System.out.println("Name Extarcted is: " + nameExtaction);  // Output user input
-  }
-}
+
 
