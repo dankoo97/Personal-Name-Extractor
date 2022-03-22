@@ -9,6 +9,17 @@ class Archivist {
         if (args.length > 0)
         {
             
+          // Creating a function that checks to see if string is a valid file path
+        // Not 100 percent functional
+        public static boolean validFilePath
+        try {
+            path.get(path);
+        } catch (InvalidPathException | NullPointerException ex) {
+            return false;
+        }
+        return true;
+    }
+            
 //            Try to run a command based on user CLI input using switch statement
 //            Possible preliminary commands:
 //                shell
