@@ -22,4 +22,8 @@ public class Token {
     public boolean isEndOfName() {
         return false; // placeholder
     }
+
+    public String getRawToken() {
+        return rawToken;
+    }
 }

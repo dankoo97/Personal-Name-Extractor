@@ -21,17 +21,17 @@ public class Block {
             // if the token is the start of a name, add a tag before adding the name
             if (t.isBeginningOfName()) {
                 markedUpText.append("<PER>");
-                markedUpText.append(t);
+                markedUpText.append(t.getRawToken());
             }
             // if the token is the end of a name, add a tag after adding the name
             else if (t.isEndOfName()) {
-                markedUpText.append(t);
+                markedUpText.append(t.getRawToken());
                 markedUpText.append("</PER>");
             }
             // otherwise, the token is not part of a name, or the continuation of a name, so
             // can be appended by itself
             else {
-                markedUpText.append(t);
+                markedUpText.append(t.getRawToken());
             }
         }
         return markedUpText.toString();
