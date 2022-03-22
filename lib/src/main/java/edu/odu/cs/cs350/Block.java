@@ -42,8 +42,10 @@ public class Block {
      */
     public void separateIntoTokens() {
         // fake data to test Block and Token
-        tokens = new Token[2];
-        tokens[0] = new Token("fake test data");
-        tokens[1] = new Token("more fake tests");
+        tokens = new Token[3];
+        tokens[0] = new Token("fake");
+        tokens[1] = new Token("test");
+        tokens[2] = new Token("data");
+
     }
 }
