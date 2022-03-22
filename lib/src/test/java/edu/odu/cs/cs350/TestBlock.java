@@ -19,8 +19,8 @@ public class TestBlock {
         Block b = new Block("This is my input string");
         String markedText = b.outputMarkedNames();
 
-        assertThat(markedText, markedText.startsWith("<PER>"));
-        assertThat(markedText, markedText.endsWith("</PER>"));
+        assertThat(markedText, startsWith("<PER>"));
+        assertThat(markedText, endsWith("</PER>"));
     }
 
     @Test
