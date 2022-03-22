@@ -51,8 +51,7 @@ class Archivist {
 //        Given corrected output, train to match
 //
 //        Exit shell
-        return """
-                """;
+        return "";
     }
 
     /*
@@ -95,4 +94,4 @@ class GetUserInput {
     System.out.println("Name Extarcted is: " + nameExtaction);  // Output user input
   }
 }
-        
+
