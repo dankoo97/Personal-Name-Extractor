@@ -15,10 +15,25 @@ public class Block {
      * Outputs marked names within text
      */
     public String outputMarkedNames() {
-        StringBuffer markedUpText = new StringBuffer("<PER>");
-        markedUpText.append(text);
-        markedUpText.append("</PER>");
+        StringBuffer markedUpText = new StringBuffer();
 
+        for (Token t : tokens) {
+            // if the token is the start of a name, add a tag before adding the name
+            if (t.isBeginningOfName()) {
+                markedUpText.append("<PER>");
+                markedUpText.append(t);
+            }
+            // if the token is the end of a name, add a tag after adding the name
+            else if (t.isEndOfName()) {
+                markedUpText.append(t);
+                markedUpText.append("</PER>");
+            }
+            // otherwise, the token is not part of a name, or the continuation of a name, so
+            // can be appended by itself
+            else {
+                markedUpText.append(t);
+            }
+        }
         return markedUpText.toString();
     }
 
