@@ -22,5 +22,13 @@ public class TestArchivist {
     }
 
     @Test
-    void testCompareOutput() { fail("Not yet implemented"); }
+    void testCompareOutput() {
+        Archivist archivist = new Archivist();
+        String input = "";
+        boolean output = archivist.compareOutput(input);
+
+//        Assert that an extracted string and input string comparison matches output
+
+        fail("Not yet implemented");
+    }
 }
