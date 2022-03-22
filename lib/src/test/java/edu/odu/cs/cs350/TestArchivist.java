@@ -54,7 +54,6 @@ public class TestArchivist {
             StringBuilder sb = new StringBuilder();
             while (reader.hasNextLine()) {
                 sb.append(reader.nextLine());
-                sb.append("\n");
             }
             String result = sb.toString();
 
