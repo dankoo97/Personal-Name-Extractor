@@ -2,6 +2,9 @@ package edu.odu.cs.cs350;
 
 import org.junit.jupiter.api.Test;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TestBlock {
@@ -16,8 +19,8 @@ public class TestBlock {
         Block b = new Block("This is my input string");
         String markedText = b.outputMarkedNames();
 
-        assertTrue(markedText.startsWith("<PER>"));
-        assertTrue(markedText.endsWith("</PER>"));
+        assertThat(markedText, markedText.startsWith("<PER>"));
+        assertThat(markedText, markedText.endsWith("</PER>"));
     }
 
     @Test
