@@ -1,7 +1,12 @@
 package edu.odu.cs.cs350;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Path;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 class Archivist {
     public static void main(String[] args) {
@@ -9,16 +14,16 @@ class Archivist {
         if (args.length > 0)
         {
             
-          // Creating a function that checks to see if string is a valid file path
-        // Not 100 percent functional
-        public static boolean validFilePath
-        try {
-            path.get(path);
-        } catch (InvalidPathException | NullPointerException ex) {
-            return false;
-        }
-        return true;
-    }
+//          // Creating a function that checks to see if string is a valid file path
+//        // Not 100 percent functional
+//        public static boolean validFilePath
+//        try {
+//            path.get(path);
+//        } catch (InvalidPathException | NullPointerException ex) {
+//            return false;
+//        }
+//        return true;
+//    }
             
 //            Try to run a command based on user CLI input using switch statement
 //            Possible preliminary commands:
@@ -72,14 +77,59 @@ class Archivist {
     }
 
     /*
-    * Attempts to extract personal names from a file f
+    * Attempts to extract personal names from a file f and writes the output to a new file at path p
+    * without changing the original unless the path p matches f, in which case the file is overwritten
     */
-    public String extract(File f) {
+    public File extract(File readFrom, Path path) throws IOException {
 //        Possible options:
 //        1. File text without tags
 //        2. File is made up of one or more strings properly wrapped by tags
 //        3. File is not a readable text file
-        return "";
+
+        if (!readFrom.canRead()) {
+            throw new IOException("Unable to read file.");
+        }
+
+        // Read from file and build a string
+        Scanner reader = new Scanner(readFrom);
+        StringBuilder sb = new StringBuilder();
+        while (reader.hasNextLine()) {
+            sb.append(reader.nextLine());
+        }
+        reader.close();
+        String contents = sb.toString();
+
+        // Split contents into individual extractable strings
+        String regex = "<NER>.*?</NER>";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(contents);
+
+        // Extract personal names from each matching group and build into string
+        StringBuilder results = new StringBuilder();
+        while (matcher.find()) {
+            String s = matcher.group();
+            results.append(extract(s));
+
+        }
+        String writeText = results.toString();
+
+        // Write to the final path
+        File writeTo = path.toFile();
+        FileWriter writer = new FileWriter(writeTo);
+        writer.write(writeText);
+        writer.flush();
+        writer.close();
+
+        return writeTo;
+    }
+
+    /*
+    * Calls extract(f, f.fileName + "_MarkedPersonalNames" + f.fileExtension)
+    */
+    public File extract(File f) throws IOException {
+        // Temp fix for file extension
+        Path p = Path.of(f.getParent() + "/" + f.getName() + "_MarkedPersonalNames.txt");
+        return extract(f, p);
     }
 
     /*
