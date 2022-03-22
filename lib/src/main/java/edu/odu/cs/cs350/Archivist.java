@@ -1,7 +1,6 @@
 package edu.odu.cs.cs350;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 class Archivist {
@@ -28,7 +27,7 @@ class Archivist {
     * Default constructor for class archivist
     */
     public Archivist() {
-
+//        Load in trained archivist
     }
 
     public void shell() {
