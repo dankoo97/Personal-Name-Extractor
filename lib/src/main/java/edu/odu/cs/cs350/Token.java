@@ -6,6 +6,7 @@ public class Token {
     FeatureSet features;
 
     public Token(String str) {
+        // Check for white space in string
         rawToken = str;
     }
 
