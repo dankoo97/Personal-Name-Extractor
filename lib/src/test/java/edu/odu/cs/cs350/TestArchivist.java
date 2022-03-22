@@ -60,6 +60,11 @@ public class TestArchivist {
             // Compare the paths of the read and write file and make sure they are different
             assertThat(tempWrittenToFile.getAbsolutePath(), not(tempReadFromFile.getAbsolutePath()));
 
+            // Compare the written to file is at the expected path
+            assertThat(tempWrittenToFile.getAbsolutePath(), equalTo(
+                    tempReadFromFile.getParent() +
+                            File.separator + tempReadFromFile.getName() + "_MarkedPersonalNames.txt"));
+
             // Assert that the written and read files can still be read and written
             assertTrue(tempWrittenToFile.canWrite());
             assertTrue(tempWrittenToFile.canRead());
