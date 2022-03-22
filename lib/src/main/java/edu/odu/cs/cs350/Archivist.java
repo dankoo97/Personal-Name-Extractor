@@ -86,9 +86,27 @@ class Archivist {
     public boolean compareOutput(String s) {
         return false;
     }
+    
+    // Archivist manually corrects incorrect output and returns new output
+    public string correctOutput(String s) 
+    {
+        string newOutput; // corrected string return variable
+        // placeholders
+        // get the original string before marked up (so without the <NER> and </NER>)
+        
+        // mark it up again 
+        
+        // check if the corrected output matches the original/incorrect output
+        // so it doesn't return the same string
+        if(compareOutput(newOutput)==true)
+        {
+            // if the strings are the same, correct it again
+        }
+        return newOutput;
+    }
 }
 
-
+   
 
 /// A test code that could run a command to get user CLI input 
 
