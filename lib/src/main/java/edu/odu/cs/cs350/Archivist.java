@@ -88,13 +88,19 @@ class Archivist {
     }
     
     // Archivist manually corrects incorrect output and returns new output
-    public String correctOutput(String s)
+       public String correctOutput(String s) 
     {
-        String newOutput = ""; // corrected string return variable
-        // placeholders
+        string newOutput; // corrected string return variable
         // get the original string before marked up (so without the <NER> and </NER>)
+        String strNotMarked=" ";
+        String[] first=s.split("<NER>"); // string without <NER>
+        for(String str:first)
+            strNotMarked=str;
+        String[] second=strNotMarked.split("</NER>"); // split </NER> from string without <NER>
+        for(String str:second)
+            strNotMarked=str;
         
-        // mark it up again 
+        // Mark it up again, but with <NER> and </NER> in the right places
         
         // check if the corrected output matches the original/incorrect output
         // so it doesn't return the same string
