@@ -86,6 +86,7 @@ class Archivist {
 //        2. File is made up of one or more strings properly wrapped by tags
 //        3. File is not a readable text file
 
+        // Check that the file can be read from
         if (!readFrom.canRead()) {
             throw new IOException("Unable to read file.");
         }
@@ -95,6 +96,7 @@ class Archivist {
         StringBuilder sb = new StringBuilder();
         while (reader.hasNextLine()) {
             sb.append(reader.nextLine());
+            sb.append("\n");
         }
         reader.close();
         String contents = sb.toString();
@@ -104,12 +106,11 @@ class Archivist {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(contents);
 
-        // Extract personal names from each matching group and build into string
-        StringBuilder results = new StringBuilder();
+        // Extract personal names from each matching group and replace
+        StringBuilder results = new StringBuilder(contents);
         while (matcher.find()) {
             String s = matcher.group();
-            results.append(extract(s));
-
+            matcher.appendReplacement(results, extract(s));
         }
         String writeText = results.toString();
 
@@ -128,7 +129,7 @@ class Archivist {
     */
     public File extract(File f) throws IOException {
         // Temp fix for file extension
-        Path p = Path.of(f.getParent() + "/" + f.getName() + "_MarkedPersonalNames.txt");
+        Path p = Path.of(f.getParent() + File.separator + f.getName() + "_MarkedPersonalNames.txt");
         return extract(f, p);
     }
 
