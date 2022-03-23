@@ -49,6 +49,9 @@ dependencies {
     // This dependency is used internally, and not exposed to consumers on their own compile classpath.
     implementation 'com.google.guava:guava:30.1.1-jre'
 
+    // Filename utilities
+    implementation 'commons-io:commons-io:2.11.0'
+
     // Special purpose libraries, some not yet needed
 //    implementation 'edu.odu.cs.zeil:JarNeedsHeap:1.0'
 //    implementation 'edu.odu.cs.extract:extract-wordlists:4.2'
