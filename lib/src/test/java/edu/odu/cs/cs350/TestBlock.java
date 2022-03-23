@@ -21,6 +21,7 @@ public class TestBlock {
         String markedText = b.outputMarkedNames();
 
         // haven't implemented FeatureSet yet, so outputMarkedNames shouldn't
+        fail("Not yet implemented");
         // have any tags yet
         assertThat(markedText, not(containsString("<PER>")));
         assertThat(markedText, not(containsString("</PER>")));
