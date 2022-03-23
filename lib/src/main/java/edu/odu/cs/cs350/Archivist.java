@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.apache.commons.io.FilenameUtils;
 
 class Archivist {
     public static void main(String[] args) {
@@ -73,15 +74,17 @@ class Archivist {
     * Attempts to extract personal names from a string s
     */
     public String extract(String s) {
+        // TODO: Implement extract string to utilize WEKA library
         return s;
     }
 
     /*
     * Attempts to extract personal names from a file f and writes the output to a new file at path p
-    * without changing the original unless the path p matches f, in which case the file is overwritten
+    * without changing the original unless the path p matches f, in which case the file is overwritten.
+    * Calls extract(String) for every string wrapped in the proper tags
     */
     public File extract(File readFrom, Path path) throws IOException {
-//        Possible options:
+//        Possible files:
 //        1. File text without tags
 //        2. File is made up of one or more strings properly wrapped by tags
 //        3. File is not a readable text file
@@ -96,22 +99,23 @@ class Archivist {
         StringBuilder sb = new StringBuilder();
         while (reader.hasNextLine()) {
             sb.append(reader.nextLine());
-            sb.append("\n");
+            sb.append(System.lineSeparator());
         }
         reader.close();
         String contents = sb.toString();
 
         // Split contents into individual extractable strings
-        String regex = "<NER>.*?</NER>";
+        String regex = "<NER>[\\s\\S]*?</NER>";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(contents);
 
         // Extract personal names from each matching group and replace
-        StringBuilder results = new StringBuilder(contents);
+        StringBuilder results = new StringBuilder();
         while (matcher.find()) {
             String s = matcher.group();
-            matcher.appendReplacement(results, extract(s));
+            matcher.appendReplacement(results, this.extract(s));
         }
+        matcher.appendTail(results);
         String writeText = results.toString();
 
         // Write to the final path
@@ -125,11 +129,16 @@ class Archivist {
     }
 
     /*
-    * Calls extract(f, f.fileName + "_MarkedPersonalNames" + f.fileExtension)
+    * Calls extract(f, f.fileBaseName + "_MarkedPersonalNames" + f.fileExtension)
     */
     public File extract(File f) throws IOException {
         // Temp fix for file extension
-        Path p = Path.of(f.getParent() + File.separator + f.getName() + "_MarkedPersonalNames.txt");
+        Path p = Path.of(
+                f.getParent() +
+                        File.separator +
+                        FilenameUtils.getBaseName(f.getAbsolutePath()) +
+                        "_MarkedPersonalNames." +
+                        FilenameUtils.getExtension(f.getAbsolutePath()));
         return extract(f, p);
     }
 
