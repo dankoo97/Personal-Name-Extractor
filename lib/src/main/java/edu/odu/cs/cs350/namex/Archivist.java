@@ -1,4 +1,6 @@
-package edu.odu.cs.cs350;
+package edu.odu.cs.cs350.namex;
+
+import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -7,7 +9,6 @@ import java.nio.file.Path;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.apache.commons.io.FilenameUtils;
 
 class Archivist {
     public static void main(String[] args) {

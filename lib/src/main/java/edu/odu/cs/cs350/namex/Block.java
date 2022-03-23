@@ -1,4 +1,4 @@
-package edu.odu.cs.cs350;
+package edu.odu.cs.cs350.namex;
 
 public class Block {
     String text;
