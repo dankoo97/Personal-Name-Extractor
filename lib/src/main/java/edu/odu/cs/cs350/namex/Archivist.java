@@ -1,5 +1,6 @@
 package edu.odu.cs.cs350.namex;
 
+import edu.odu.cs.cs350.namex.tools.TagUtil;
 import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
@@ -110,14 +111,21 @@ class Archivist {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(contents);
 
-        // Extract personal names from each matching group and replace
-        StringBuilder results = new StringBuilder();
-        while (matcher.find()) {
-            String s = matcher.group();
-            matcher.appendReplacement(results, this.extract(s));
+        // If the file is not properly wrapped by <NER> tags, wrap the entire contents of the text file
+        String writeText;
+        if (matcher.groupCount() == 0) {
+            String results = TagUtil.wrapStringByTag("NER", contents);
+            writeText = this.extract(results);
+        } else {
+            // Extract personal names from each matching group and replace
+            StringBuilder results = new StringBuilder();
+            while (matcher.find()) {
+                String s = matcher.group();
+                matcher.appendReplacement(results, this.extract(s));
+            }
+            matcher.appendTail(results);
+            writeText = results.toString();
         }
-        matcher.appendTail(results);
-        String writeText = results.toString();
 
         // Write to the final path
         File writeTo = path.toFile();
@@ -184,10 +192,3 @@ class Archivist {
         return newOutput;
     }
 }
-
-   
-
-
-
-
-
