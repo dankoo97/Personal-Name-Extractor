@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
+import org.apache.commons.io.FilenameUtils;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -30,19 +31,20 @@ public class TestArchivist {
 
             // Example from requirements definition
             String[] writeText = {
-                    "<NER>(UUV) master plan. Bluefin Robotics Corporation and</NER>\n",
-                    "<NER>Final Report\n" +
-                            "Prepared for :\n" +
-                            " Dr. David Chris Arney\n" +
-                            " US Army Research Office\n" +
-                            " Research Triangle Park, NC 27 70 9 - 22 11\n" +
-                            " Email : david.arney1@us.army.</NER>\n",
-                    "<NER>(WHOI) Department of Applied Ocean Physics and</NER>\n",
+                    "<NER>(UUV) master plan. Bluefin Robotics Corporation and</NER>",
+                    String.join(System.lineSeparator(), new String[]{
+                            "<NER>Final Report",
+                            "Prepared for :",
+                            " Dr. David Chris Arney",
+                            " US Army Research Office",
+                            " Research Triangle Park, NC 27 70 9 - 22 11",
+                            " Email : david.arney1@us.army.</NER>"}),
+                    "<NER>(WHOI) Department of Applied Ocean Physics and</NER>"
             };
 
             // Fill the file to read from with data
             FileWriter writer = new FileWriter(tempReadFromFile);
-            writer.write(String.join("", writeText));
+            writer.write(String.join(System.lineSeparator(), writeText));
             writer.flush();
 
             // Attempt to extract
@@ -54,6 +56,7 @@ public class TestArchivist {
             StringBuilder sb = new StringBuilder();
             while (reader.hasNextLine()) {
                 sb.append(reader.nextLine());
+                sb.append(System.lineSeparator());
             }
             String result = sb.toString();
 
@@ -63,7 +66,11 @@ public class TestArchivist {
             // Compare the written to file is at the expected path
             assertThat(tempWrittenToFile.getAbsolutePath(), equalTo(
                     tempReadFromFile.getParent() +
-                            File.separator + tempReadFromFile.getName() + "_MarkedPersonalNames.txt"));
+                            File.separator +
+                            FilenameUtils.getBaseName(tempReadFromFile.getAbsolutePath()) +
+                            "_MarkedPersonalNames." +
+                            FilenameUtils.getExtension(tempReadFromFile.getAbsolutePath())
+                    ));
 
             // Assert that the written and read files can still be read and written
             assertTrue(tempWrittenToFile.canWrite());
@@ -85,8 +92,6 @@ public class TestArchivist {
             e.printStackTrace();
             fail(e);
         }
-
-        fail("Not yet implemented");
     }
 
     @Test
