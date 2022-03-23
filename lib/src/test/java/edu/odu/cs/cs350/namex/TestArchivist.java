@@ -1,12 +1,12 @@
 package edu.odu.cs.cs350.namex;
 
+import org.apache.commons.io.FilenameUtils;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
-import org.apache.commons.io.FilenameUtils;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -116,6 +116,6 @@ public class TestArchivist {
         String input="Dr.<PER>David Chris Arney</PER>";
         String correctedOutput="<PER>Dr. David Chris Arney</PER>";
         // assert corrected output string equals output from correctOutput function
-        assertEquals(correctedOutput.equals(a.correctOutput(input));
+        assertThat(correctedOutput, equalTo(a.correctOutput(input)));
     }
 }
