@@ -109,4 +109,13 @@ public class TestArchivist {
 
         fail("Not yet implemented");
     }
+    @Test
+    void testCorrectOutput()
+    {
+        Archivist a= new Archivist();
+        String input="Dr.<PER>David Chris Arney</PER>";
+        String correctedOutput="<PER>Dr. David Chris Arney</PER>";
+        // assert corrected output string equals output from correctOutput function
+        assertEquals(correctedOutput.equals(a.correctOutput(input));
+    }
 }
