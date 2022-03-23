@@ -1,5 +1,6 @@
 package edu.odu.cs.cs350.namex;
 
+import edu.odu.cs.cs350.namex.tools.TagUtil;
 import org.apache.commons.io.FilenameUtils;
 import org.junit.jupiter.api.Test;
 
@@ -83,6 +84,33 @@ public class TestArchivist {
             for (String s : writeText) {
                 assertThat(result, containsString(archivist.extract(s)));
             }
+
+            // Write a file without <NER> tags
+            writeText = new String[]{
+                    "I am Dr. Tobias Funke",
+                    "I am the world's first analyst and therapist",
+                    "The world's first ",
+                    "",
+            };
+            writer = new FileWriter(tempWrittenToFile);
+            writer.write(String.join(System.lineSeparator(), writeText));
+            writer.flush();
+
+            // Attempt to extract from file
+            tempWrittenToFile = archivist.extract(tempWrittenToFile);
+
+            // Read extracted file
+            reader = new Scanner(tempWrittenToFile);
+            sb = new StringBuilder();
+            while (reader.hasNextLine()) {
+                sb.append(reader.nextLine());
+                sb.append(System.lineSeparator());
+            }
+            result = sb.toString();
+
+            // Assert that the results match the extracted string
+            assertThat(result, equalTo(archivist.extract(
+                    TagUtil.wrapStringByTag("NER", String.join(System.lineSeparator(), writeText))) + System.lineSeparator()));
 
             writer.close();
             reader.close();
