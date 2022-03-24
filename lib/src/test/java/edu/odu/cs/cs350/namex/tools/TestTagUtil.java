@@ -26,6 +26,37 @@ public class TestTagUtil {
 
     @Test
     void testUnwrapTags() {
+        String string = "<NER>I am a string.</NER>";
+        String unwrapped = TagUtil.unwrapTags(string);
+        assertThat(
+                "A simple string with one tag that is removed",
+                unwrapped,
+                is("I am a string."));
+
+
+        string = "<NER>During the meeting, <PER>James Holden</PER> gave a shocking testimony.</NER>";
+        unwrapped = TagUtil.unwrapTags(string);
+        assertThat(
+                "A string with multiple different tags removes all tags",
+                unwrapped,
+                is("<NER>During the meeting, James Holden gave a shocking testimony.</NER>"));
+
+
+        string = "<NER><PER>Capt. Raymond Holt</PER> gave a speech to the cadets followed by <PER>Sgt. Amy Peralta</PER></NER>";
+        unwrapped = TagUtil.unwrapTags(string);
+        assertThat(
+                "If multiple of the same tag exist all are removed",
+                unwrapped,
+                is("Capt. Raymond Holt gave a speech to the cadets followed by Sgt. Amy Peralta"));
+
+
+        string = "I feel like I am missing something";
+        unwrapped = TagUtil.unwrapTags(string);
+        assertThat(
+                "If no tags exist, the string is returned asis",
+                unwrapped,
+                is(string));
+
         fail("Not yet implemented");
     }
 
