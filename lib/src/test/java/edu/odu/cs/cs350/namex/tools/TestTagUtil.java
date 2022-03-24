@@ -34,31 +34,36 @@ public class TestTagUtil {
         String string = "<NER>I am a string.</NER>";
         String tag = "NER";
         String unwrapped = TagUtil.unwrapTag(tag, string);
+        assertThat(
+                "A simple string with one tag that is removed",
+                unwrapped,
+                is("I am a string."));
 
-        // Assert that a simple string with one tag is removed
-        assertThat(unwrapped, is("I am a string."));
 
-        // Assert that a string with multiple tags only removes the one specified
         string = "<NER>During the meeting, <PER>James Holden</PER> gave a shocking testimony.</NER>";
         tag = "PER";
         unwrapped = TagUtil.unwrapTag(tag, string);
+        assertThat(
+                "A string with multiple tags only removes the ones specified",
+                unwrapped,
+                is("<NER>During the meeting, James Holden gave a shocking testimony.</NER>"));
 
-        assertThat(unwrapped, is("<NER>During the meeting, James Holden gave a shocking testimony.</NER>"));
 
-        // Assert that is multiple of the same tag exist all are removed
         string = "<NER><PER>Capt. Raymond Holt</PER> gave a speech to the cadets followed by <PER>Sgt. Amy Peralta</PER></NER>";
         tag = "PER";
         unwrapped = TagUtil.unwrapTag(tag, string);
+        assertThat(
+                "If multiple of the same tag exist all are removed",
+                unwrapped,
+                is("<NER>Capt. Raymond Holt gave a speech to the cadets followed by Sgt. Amy Peralta</NER>"));
 
-        assertThat(unwrapped, is("<NER>Capt. Raymond Holt gave a speech to the cadets followed by Sgt. Amy Peralta</NER>"));
 
-        // Assert that if the tag does not exist in the string, that the string is returned as is
         string = "<NER><PER>Capt. Raymond Holt</PER> gave a speech to the cadets followed by <PER>Sgt. Amy Peralta</PER></NER>";
         tag = "DNE";
         unwrapped = TagUtil.unwrapTag(tag, string);
-
-        assertThat(unwrapped, is(string));
-
-        fail("Not yet implemented");
+        assertThat(
+                "If the tag does not exist in the string, then the string is returned asis",
+                unwrapped,
+                is(string));
     }
 }
