@@ -16,7 +16,18 @@ public class TagUtil {
     }
 
     public static String unwrapTags(String string) {
-        return "";
+        StringBuilder result = new StringBuilder();
+
+        String regex = "</?[\\s\\S]*?>";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(string);
+
+        while (matcher.find()) {
+            matcher.appendReplacement(result, "");
+        }
+        matcher.appendTail(result);
+
+        return result.toString();
     }
 
     public static String unwrapTag(String tag, String string) {
