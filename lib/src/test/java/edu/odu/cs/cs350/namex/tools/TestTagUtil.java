@@ -2,9 +2,8 @@ package edu.odu.cs.cs350.namex.tools;
 
 import org.junit.jupiter.api.Test;
 
-import static org.hamcrest.Matchers.*;
-import static org.hamcrest.MatcherAssert.*;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
 public class TestTagUtil {
     @Test
@@ -56,8 +55,6 @@ public class TestTagUtil {
                 "If no tags exist, the string is returned asis",
                 unwrapped,
                 is(string));
-
-        fail("Not yet implemented");
     }
 
     @Test
