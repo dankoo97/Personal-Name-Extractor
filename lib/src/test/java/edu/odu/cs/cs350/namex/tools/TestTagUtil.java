@@ -39,7 +39,7 @@ public class TestTagUtil {
         assertThat(
                 "A string with multiple different tags removes all tags",
                 unwrapped,
-                is("<NER>During the meeting, James Holden gave a shocking testimony.</NER>"));
+                is("During the meeting, James Holden gave a shocking testimony."));
 
 
         string = "<NER><PER>Capt. Raymond Holt</PER> gave a speech to the cadets followed by <PER>Sgt. Amy Peralta</PER></NER>";
