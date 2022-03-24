@@ -15,6 +15,9 @@ public class TagUtil {
         });
     }
 
+    /*
+    * Unwraps all tags from a string
+    */
     public static String unwrapTags(String string) {
         StringBuilder result = new StringBuilder();
 
@@ -30,6 +33,9 @@ public class TagUtil {
         return result.toString();
     }
 
+    /*
+    * Unwraps all instances of a given tag from a string
+    */
     public static String unwrapTag(String tag, String string) {
         StringBuilder result = new StringBuilder();
 
