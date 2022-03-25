@@ -1,8 +1,10 @@
 package edu.odu.cs.cs350.namex;
 
+import java.util.ArrayList;
+
 public class Block {
     String text;
-    Token[] tokens;
+    ArrayList<Token> tokens;
 
     /*
      * Constructor
@@ -41,11 +43,41 @@ public class Block {
      * Separates text into tokens
      */
     public void separateIntoTokens() {
-        // fake data to test Block and Token
-        tokens = new Token[3];
-        tokens[0] = new Token("fake");
-        tokens[1] = new Token("test");
-        tokens[2] = new Token("data");
+        tokens = new ArrayList<>();
+        StringBuffer tempString = new StringBuffer();
+
+        // split the text into individual words called tokens
+        for (int i = 0; i < text.length(); i++) {
+            // create a token using each word from text and add
+            // the token to the ArrayList
+            if (text.charAt(i) == ' ') {
+                addToken(tempString);
+            }
+            // if character is not a space, it's part of a token
+            else {
+                tempString.append(text.charAt(i));
+
+                // add the last token
+                if (i == text.length() - 1) {
+                    addToken(tempString);
+                }
+            }
+
+        }
 
     }
+
+    public ArrayList<Token> getTokens() {
+        return tokens;
+    }
+
+    private void addToken(StringBuffer sb) {
+        // create a Token from the word, add it to
+        // the arrayList, and reset the StringBuffer for
+        // the next word
+        Token t = new Token(sb.toString());
+        tokens.add(t);
+        sb.delete(0, sb.length());
+    }
+
 }
