@@ -178,13 +178,6 @@ class Archivist {
         System.out.println("Enter the string marked up correctly");
         newOutput=scan.nextLine();
           
-        // check if the corrected output matches the original/incorrect output
-        // so it doesn't return the same string
-        if(compareOutput(newOutput)==true)
-        {
-            // if the strings are the same, correct it again
-            correctOutput(newOutput);
-        }
         return newOutput;
     }
 }
