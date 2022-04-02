@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -124,7 +125,41 @@ public class TestArchivist {
 
     @Test
     void testCreateARFFWithShingling() {
-        fail("Not yet implemented");
+        int k = 3;
+        try {
+            Archivist.createARFFWithShingling(k, new String[] {
+                    "<NER>I saw John</NER>"
+            });
+            Scanner reader = new Scanner(new File("K" + k + "name.arff.listing"));
+
+            // Assert that the file begins with relation indicator
+            assertThat(reader.nextLine(), is("@relation names"));
+
+            // Assert that the next lines are attributes and end with a data indicator
+            // Does not assert that attribute are meaningful or correct
+            Pattern attributePattern = Pattern.compile("@attribute [a-zA-Z_\\d]+ (numeric|\\{[a-zA-Z_\\d]+?})");
+            while (reader.hasNext()) {
+                String val = reader.nextLine();
+                if (val.startsWith("@a")) {
+                    assertThat(val, matchesPattern(attributePattern));
+                } else if (val.startsWith("@d")) {
+                    assertThat(val, matchesPattern("@data"));
+                    break;
+                }
+            }
+
+            // Assert that remaining lines are csv compatible instances of data
+            // Does not assert that data is meaningful or correct, only that it is readable
+            Pattern instancePattern = Pattern.compile("((\\d+?|[a-zA-Z_\\d]+),)+(\\d+?|[a-zA-Z_\\d]+)");
+            while (reader.hasNext()) {
+                String val = reader.nextLine();
+                if (!val.isBlank()) {
+                    assertThat(val, matchesPattern(instancePattern));
+                }
+            }
+        } catch (IOException e) {
+            fail(e);
+        }
     }
 
     @Test
