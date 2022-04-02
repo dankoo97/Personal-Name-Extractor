@@ -123,6 +123,11 @@ public class TestArchivist {
     }
 
     @Test
+    void testCreateARFFWithShingling() {
+        fail("Not yet implemented");
+    }
+
+    @Test
     void testTrainArchivist() {
         fail("Not yet implemented");
     }
