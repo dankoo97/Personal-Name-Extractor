@@ -21,7 +21,7 @@ class Archivist {
     /** Training data gathered so far */
     private Instances data = null;
 
-    /** The classifier */
+    /** The classifier used for machine learning */
     private SMO svm = null;
 
     public static void main(String[] args) {
@@ -60,6 +60,12 @@ class Archivist {
 //        Load in trained archivist from a default file
     }
 
+    /**
+     * Creates an Arff file for training the machine learning algorithm
+     * @param k the value of k for shingling
+     * @param trainingData data used for training
+     * @return arff file
+     */
     public static File createARFFWithShingling(int k, String[] trainingData) {
         // TODO: Fix given path
         File output = new File("K" + k + "names.arff.listing");
@@ -113,11 +119,14 @@ class Archivist {
     }
 
     /**
-    * Create ARFF file with data from file
-    */
+     * Creates an Arff file for training the machine learning algorithm
+     * @param k the value of k for shingling
+     * @param trainingDataFile data used for training
+     * @throws IOException in case file not found or unable to be read
+     */
     public static File createARFFWithShingling(int k, File trainingDataFile) throws IOException {
         Scanner scanner = new Scanner(trainingDataFile);
-        scanner.useDelimiter("(?<=\\</NER>)\n(?=\\<NER>)");
+        scanner.useDelimiter("(?<=</NER>)[\\s\\S]*?(?=<NER>)");
 
         List<String> data = new ArrayList<>();
 
@@ -141,6 +150,10 @@ class Archivist {
         }
     }
 
+    /**
+     * Provides help commands to the user
+     * @return manual as a string
+     */
     private static String helpCommands() {
 //        Extractions
 //        Extract from string
@@ -163,11 +176,16 @@ class Archivist {
     }
 
     /**
-    * Attempts to extract personal names from a file f and writes the output to a new file at path p
-    * without changing the original unless the path p matches f, in which case the file is overwritten.
-    * Calls extract(String) for every string wrapped in the proper tags
-    */
+     * Attempts to extract personal names from a file f and writes the output to a new file at path p
+     * without changing the original unless the path p matches f, in which case the file is overwritten.
+     * Calls extract(String) for every string wrapped in the proper tags
+     * @param readFrom file to read from
+     * @param path path to new file
+     * @return extracted file
+     * @throws IOException unable to read file
+     */
     public File extract(File readFrom, Path path) throws IOException {
+        // TODO: If file at path already exists should this request confirmation to replace file?
 //        Possible files:
 //        1. File text without tags
 //        2. File is made up of one or more strings properly wrapped by tags
@@ -219,18 +237,21 @@ class Archivist {
         return writeTo;
     }
 
-    /**
-    * Calls extract(f, f.fileBaseName + "_MarkedPersonalNames" + f.fileExtension)
-    */
-    public File extract(File f) throws IOException {
+
+    /** Calls extract(f, f.fileBaseName + "_MarkedPersonalNames" + f.fileExtension)
+     * @param file file to be extracted
+     * @return extracted file
+     * @throws IOException unable to read file
+     */
+    public File extract(File file) throws IOException {
         // Temp fix for file extension
         Path p = Path.of(
-                f.getParent() +
+                file.getParent() +
                         File.separator +
-                        FilenameUtils.getBaseName(f.getAbsolutePath()) +
+                        FilenameUtils.getBaseName(file.getAbsolutePath()) +
                         "_MarkedPersonalNames." +
-                        FilenameUtils.getExtension(f.getAbsolutePath()));
-        return extract(f, p);
+                        FilenameUtils.getExtension(file.getAbsolutePath()));
+        return extract(file, p);
     }
 
     /**
