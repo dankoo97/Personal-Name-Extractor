@@ -2,16 +2,28 @@ package edu.odu.cs.cs350.namex;
 
 import edu.odu.cs.cs350.namex.tools.TagUtil;
 import org.apache.commons.io.FilenameUtils;
+import weka.classifiers.functions.SMO;
+import weka.core.Instances;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 class Archivist {
+
+    /** Training data gathered so far */
+    private Instances data = null;
+
+    /** The classifier */
+    private SMO svm = null;
+
     public static void main(String[] args) {
         Archivist archivist = new Archivist();
         if (args.length > 0)
@@ -41,11 +53,81 @@ class Archivist {
         }
     }
 
-    /*
+    /**
     * Default constructor for class archivist
     */
     public Archivist() {
-//        Load in trained archivist
+//        Load in trained archivist from a default file
+    }
+
+    public static File createARFFWithShingling(int k, String[] trainingData) {
+        // TODO: Fix given path
+        File output = new File("K" + k + "names.arff.listing");
+        InputStream ArffFormat = Archivist.class.getClassLoader().getResourceAsStream("arff_formatting.txt");
+
+        String relation = "";
+        ArrayList<String> attributes = new ArrayList<>();
+        ArrayList<String> data = new ArrayList<>();
+
+        try {
+            Scanner reader = new Scanner(ArffFormat);
+
+            while (reader.hasNext()) {
+                String line = reader.nextLine();
+                if (line.toLowerCase().startsWith("@relation")) {
+                    relation = line;
+                } else if (line.toLowerCase().startsWith("@attribute")) {
+                    attributes.add(line);
+                }
+            }
+
+            FileWriter writer = new FileWriter(output);
+            writer.write(relation + "\n\n");
+            writer.flush();
+
+            writer.write("% Total dimensions = " + ((2 * k + 1) * (attributes.size() - 1) + k + 1) + "\n");
+            for (int i = 0; i < 2*k + 1; i++) {
+                writer.write("% K = " + (i - k) + "\n");
+                for (int j = 0; j < (i <= k ? attributes.size() : attributes.size() - 1); j++) {
+                    String writeText = String.join(String.valueOf(i), attributes.get(j).split("\\{num}")) + "\n";
+                    writer.write(writeText);
+                }
+                writer.write("\n");
+            }
+            writer.flush();
+
+            // TODO: From data create instances to write out to
+            writer.write("@data\n");
+            for (String s : data) {
+                writer.write(s);
+                writer.flush();
+            }
+
+            writer.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return output;
+    }
+
+    /**
+    * Create ARFF file with data from file
+    */
+    public static File createARFFWithShingling(int k, File trainingDataFile) throws IOException {
+        Scanner scanner = new Scanner(trainingDataFile);
+        scanner.useDelimiter("(?<=\\</NER>)\n(?=\\<NER>)");
+
+        List<String> data = new ArrayList<>();
+
+        while (scanner.hasNext()) {
+            data.add(scanner.next());
+        }
+
+        scanner.close();
+
+        return Archivist.createARFFWithShingling(k, data.toArray(new String[]{}));
     }
 
     public void shell() {
@@ -72,7 +154,7 @@ class Archivist {
         return "";
     }
 
-    /*
+    /**
     * Attempts to extract personal names from a string s
     */
     public String extract(String s) {
@@ -80,7 +162,7 @@ class Archivist {
         return s;
     }
 
-    /*
+    /**
     * Attempts to extract personal names from a file f and writes the output to a new file at path p
     * without changing the original unless the path p matches f, in which case the file is overwritten.
     * Calls extract(String) for every string wrapped in the proper tags
@@ -137,7 +219,7 @@ class Archivist {
         return writeTo;
     }
 
-    /*
+    /**
     * Calls extract(f, f.fileBaseName + "_MarkedPersonalNames" + f.fileExtension)
     */
     public File extract(File f) throws IOException {
@@ -151,14 +233,14 @@ class Archivist {
         return extract(f, p);
     }
 
-    /*
+    /**
     * Trains archivist using machine learning
     */
-    public void trainArchivist(String s) {
+    public void trainArchivist(String[] trainingData) {
 //        Trains machine learning with a corrected string
     }
 
-    /*
+    /**
     * Compare a given string to the trained output and
     * return true if they match, else false
     */
@@ -166,7 +248,7 @@ class Archivist {
         return false;
     }
     
-    /*
+    /**
     * Archivist manually corrects incorrect output and returns new output
     */
     public String correctOutput(String s)
