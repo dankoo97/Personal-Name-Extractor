@@ -127,9 +127,11 @@ public class TestArchivist {
     void testCreateARFFWithShingling() {
         int k = 3;
         try {
-            File output = Archivist.createARFFWithShingling(k, new String[] {
+            String[] dataAdded = {
                     "<NER>I saw John</NER>",
-            });
+            };
+
+            File output = Archivist.createARFFWithShingling(k, dataAdded);
             Scanner reader = new Scanner(output);
 
             // Assert that the file begins with relation indicator
@@ -151,12 +153,19 @@ public class TestArchivist {
             // Assert that remaining lines are csv compatible instances of data
             // Does not assert that data is meaningful or correct, only that it is readable
             Pattern instancePattern = Pattern.compile("((\\d+?|[a-zA-Z_\\d]+),)+(\\d+?|[a-zA-Z_\\d]+)");
+            boolean flag = false;
             while (reader.hasNext()) {
                 String val = reader.nextLine();
                 if (!val.isBlank()) {
                     assertThat("Data should be csv readable", val, matchesPattern(instancePattern));
+                    flag = true;
                 }
             }
+
+            // Assert that if data is given, then there is data in the arff file
+            assertThat("Training data is given, so there should be data that is populated", flag || dataAdded.length == 0);
+
+
         } catch (IOException e) {
             fail(e);
         }
