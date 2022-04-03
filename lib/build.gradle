@@ -64,7 +64,20 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
-task train {
+tasks.register('train') {
     // train Archivist class
+    dependsOn 'test'
+    println "Training not yet implemented..."
+}
+
+tasks.register('reports') {
+
+}
+
+tasks.register('publish') {
+
+}
+
+tasks.register('systest') {
 
 }
