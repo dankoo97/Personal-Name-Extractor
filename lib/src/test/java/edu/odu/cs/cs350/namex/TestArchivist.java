@@ -127,23 +127,23 @@ public class TestArchivist {
     void testCreateARFFWithShingling() {
         int k = 3;
         try {
-            Archivist.createARFFWithShingling(k, new String[] {
-                    "<NER>I saw John</NER>"
+            File output = Archivist.createARFFWithShingling(k, new String[] {
+                    "<NER>I saw John</NER>",
             });
-            Scanner reader = new Scanner(new File("K" + k + "name.arff.listing"));
+            Scanner reader = new Scanner(output);
 
             // Assert that the file begins with relation indicator
-            assertThat(reader.nextLine(), is("@relation names"));
+            assertThat("File should begin with relation", reader.nextLine(), is("@relation names"));
 
             // Assert that the next lines are attributes and end with a data indicator
             // Does not assert that attribute are meaningful or correct
-            Pattern attributePattern = Pattern.compile("@attribute [a-zA-Z_\\d]+ (numeric|\\{[a-zA-Z_\\d]+?})");
+            Pattern attributePattern = Pattern.compile("@attribute [a-zA-Z_\\d]+ (numeric|\\{([a-zA-Z_0-9]+?, )+[a-zA-Z_0-9]+})");
             while (reader.hasNext()) {
                 String val = reader.nextLine();
-                if (val.startsWith("@a")) {
-                    assertThat(val, matchesPattern(attributePattern));
-                } else if (val.startsWith("@d")) {
-                    assertThat(val, matchesPattern("@data"));
+                if (val.startsWith("@attribute")) {
+                    assertThat("File should have attribute tags", val, matchesRegex(attributePattern));
+                } else if (val.startsWith("@data")) {
+                    assertThat("File should have data tag", val, matchesPattern("@data"));
                     break;
                 }
             }
@@ -154,7 +154,7 @@ public class TestArchivist {
             while (reader.hasNext()) {
                 String val = reader.nextLine();
                 if (!val.isBlank()) {
-                    assertThat(val, matchesPattern(instancePattern));
+                    assertThat("Data should be csv readable", val, matchesPattern(instancePattern));
                 }
             }
         } catch (IOException e) {
