@@ -58,4 +58,8 @@ public class Block {
         return tokens;
     }
 
+    public String getText() {
+        return text;
+    }
+
 }
