@@ -1,0 +1,17 @@
+@relation names
+
+@attribute Lexical{num} {CapLetter, capitalized, number, punctuation, NewLine, ALLCAPS, null, other}
+@attribute PoS{num} {article, conjunction, period, comma, hyphen, prepositions, other}
+@attribute Dict{num} numeric
+@attribute City{num} numeric
+@attribute Country{num} numeric
+@attribute Places{num} numeric
+@attribute DTICFirst{num} numeric
+@attribute DTICLast{num} numeric
+@attribute CommonFirst{num} numeric
+@attribute CommonLast{num} numeric
+@attribute Honorific{num} numeric
+@attribute Prefix{num} numeric
+@attribute Suffix{num} numeric
+@attribute Kill{num} numeric
+@attribute PartOfPersonalName{num} {BP, CP, other}
