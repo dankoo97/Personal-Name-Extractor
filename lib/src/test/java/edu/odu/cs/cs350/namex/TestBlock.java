@@ -12,7 +12,9 @@ public class TestBlock {
 
     @Test
     void testConstructor() {
-        fail("Not yet implemented");
+        Block b = new Block("testing 1 2 3");
+        String testString = b.getText();
+        assertEquals(testString, "testing 1 2 3");
     }
 
     @Test
