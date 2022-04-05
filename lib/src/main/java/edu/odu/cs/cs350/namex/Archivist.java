@@ -253,6 +253,9 @@ class Archivist {
     */
     public String correctOutput(String s)
     {
+        //call unwrapTags function from TagUtil.java
+        unwrapTags(s);
+        
         String newOutput = ""; // corrected string return variable
         Scanner scan= new Scanner(System.in);
         
