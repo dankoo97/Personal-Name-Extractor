@@ -4,6 +4,7 @@ import edu.odu.cs.cs350.namex.tools.TagUtil;
 import org.apache.commons.io.FilenameUtils;
 import weka.classifiers.functions.SMO;
 import weka.core.Instances;
+import weka.core.converters.ConverterUtils.DataSource;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -15,6 +16,8 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static edu.odu.cs.cs350.namex.tools.TagUtil.*;
 
 class Archivist {
 
@@ -72,6 +75,19 @@ class Archivist {
     }
 
     /**
+     * Creates an archivist trained from a given file
+     * @param file file to read Arff data from
+     * @throws Exception cannot find file or file is unable to be read
+     */
+    public Archivist(File file) throws Exception {
+        DataSource source = new DataSource(file.getAbsolutePath());
+        Instances dataSet = source.getDataSet();
+
+        // TODO: Should this be changed to look for the labelled attribute or stay as last?
+        dataSet.setClassIndex(dataSet.numClasses() - 1);
+    }
+
+    /**
      * Creates an Arff file for training the machine learning algorithm
      * @param k the value of k for shingling
      * @param trainingData data used for training
@@ -89,6 +105,7 @@ class Archivist {
         try {
             Scanner reader = new Scanner(ArffFormat);
 
+            // Read from formatting file
             while (reader.hasNext()) {
                 String line = reader.nextLine();
                 if (line.toLowerCase().startsWith("@relation")) {
@@ -98,22 +115,27 @@ class Archivist {
                 }
             }
 
+            // Write relation
             FileWriter writer = new FileWriter(output);
             writer.write(relation + "\n\n");
             writer.flush();
 
+            // Write attributes
             writer.write("% Total dimensions = " + ((2 * k + 1) * (attributes.size() - 1) + k + 1) + "\n");
             for (int i = 0; i < 2*k + 1; i++) {
                 writer.write("% K = " + (i - k) + "\n");
-                for (int j = 0; j < (i <= k ? attributes.size() : attributes.size() - 1); j++) {
+                for (int j = 0; j < (i < k ? attributes.size() : attributes.size() - 1); j++) {
                     String writeText = String.join(String.valueOf(i), attributes.get(j).split("\\{num}")) + "\n";
                     writer.write(writeText);
                 }
                 writer.write("\n");
             }
+
+            // Simplify indexing by making the last attribute the one we classify
+            writer.write("@attribute PartOfPersonalNameFinal {BP, CP, other}\n");
             writer.flush();
 
-            // TODO: From data create instances to write out to
+            // TODO: From data create instances to write out
             writer.write("@data\n");
             for (String s : data) {
                 writer.write(s);
