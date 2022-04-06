@@ -29,16 +29,27 @@ class Archivist {
         if (args.length > 0)
         {
             
-//          // Creating a function that checks to see if string is a valid file path
-//        // Not 100 percent functional
-//        public static boolean validFilePath
-//        try {
-//            path.get(path);
-//        } catch (InvalidPathException | NullPointerException ex) {
-//            return false;
-//        }
-//        return true;
-//    }
+          //Creating a function that checks to see if string is a valid file path
+      //Not 100 percent functional
+            public static boolean validFilePath
+    try {
+       path.get(path);
+   } catch (InvalidPathException | NullPointerException ex) {
+           return false;
+        }
+        return true;
+    }
+        
+        // Another possible tester for string input and output statements 
+        
+        public class Scanner{ 
+            Scanner in = new Scanner(System.in); 
+            System.out.print ("Enter something here"); 
+            stringStatement = in.nextLine(); 
+            system.out.println(User input is: "+ Statement); 
+            in.close(); 
+                               
+            
             
 //            Try to run a command based on user CLI input using switch statement
 //            Possible preliminary commands:
