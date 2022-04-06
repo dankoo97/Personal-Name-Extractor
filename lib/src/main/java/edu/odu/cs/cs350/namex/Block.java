@@ -6,15 +6,18 @@ public class Block {
     String text;
     ArrayList<Token> tokens;
 
-    /*
+    /**
      * Constructor
+     * 
+     * @param s the string that will form the Block's text
      */
     public Block(String s) {
         text = s;
     }
 
-    /*
-     * Outputs marked names within text
+    /**
+     * Outputs block of text with tags around
+     * each personal name
      */
     public String outputMarkedNames() {
         StringBuffer markedUpText = new StringBuffer();
@@ -39,8 +42,9 @@ public class Block {
         return markedUpText.toString();
     }
 
-    /*
-     * Separates text into tokens
+    /**
+     * Separates text into individual tokens for each
+     * word in the text
      */
     public void separateIntoTokens() {
         tokens = new ArrayList<>();
@@ -54,10 +58,19 @@ public class Block {
 
     }
 
+    /**
+     * 
+     * @return an ArrayList of Tokens, each Token is a word from
+     *         the block of text
+     */
     public ArrayList<Token> getTokens() {
         return tokens;
     }
 
+    /**
+     * 
+     * @return string that forms the text block
+     */
     public String getText() {
         return text;
     }
