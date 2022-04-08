@@ -58,6 +58,18 @@ dependencies {
     implementation 'nz.ac.waikato.cms.weka:weka-stable:3.8.6'
 }
 
+tasks.named('jar') {
+    archiveBaseName = 'Personal-Name-Extractor'
+
+    manifest {
+        attributes(
+                'Implementation-Name': project.name,
+                'Implementation-Version': project.version,
+                'Main-Class': 'edu.odu.cs.cs350.namex.Archivist',
+        )
+    }
+}
+
 tasks.named('test') {
     // Use JUnit Platform for unit tests.
     ignoreFailures = true
