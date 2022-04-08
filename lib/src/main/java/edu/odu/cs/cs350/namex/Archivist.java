@@ -17,8 +17,6 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static edu.odu.cs.cs350.namex.tools.TagUtil.*;
-
 class Archivist {
 
     /** Training data gathered so far */
@@ -27,33 +25,56 @@ class Archivist {
     /** The classifier used for machine learning */
     private SMO svm = null;
 
+    /*
     public static void main(String[] args) {
         Archivist archivist = new Archivist();
         if (args.length > 0)
         {
-            
+
+            switch (args[0].toLowerCase()) {
+                case "extract-file":
+                    try {
+                        archivist.extract(new File(String.valueOf(Path.of(args[1]))));
+                    } catch (IOException e) {
+                        System.out.println("Error: unable to find file");
+                    }
+                    break;
+                case "extract-string":
+                    System.out.println(archivist.extract(args[1]));
+                    break;
+                case "shell":
+                    archivist.shell();
+                    break;
+                case "help":
+                    System.out.println(helpCommands());
+                    break;
+                default:
+                    System.out.println("Unable to decipher you command, here are some valid commands:");
+                    System.out.println(helpCommands());
+            }
+
           //Creating a function that checks to see if string is a valid file path
       //Not 100 percent functional
-            public static boolean validFilePath
-    try {
-       path.get(path);
-   } catch (InvalidPathException | NullPointerException ex) {
-           return false;
-        }
-        return true;
-    }
-        
-        // Another possible tester for string input and output statements 
-        
-        public class Scanner{ 
-            Scanner in = new Scanner(System.in); 
-            System.out.print ("Enter something here"); 
-            stringStatement = in.nextLine(); 
-            system.out.println(User input is: "+ Statement); 
-            in.close(); 
-                               
-            
-            
+//            public static boolean validFilePath
+//    try {
+//       path.get(path);
+//   } catch (InvalidPathException | NullPointerException ex) {
+//           return false;
+//        }
+//        return true;
+//    }
+//
+//        // Another possible tester for string input and output statements
+//
+//        public class Scanner{
+//            Scanner in = new Scanner(System.in);
+//            System.out.print ("Enter something here");
+//            stringStatement = in.nextLine();
+//            system.out.println(User input is: "+ Statement);
+//            in.close();
+
+
+
 //            Try to run a command based on user CLI input using switch statement
 //            Possible preliminary commands:
 //                shell
@@ -65,7 +86,7 @@ class Archivist {
 //            Open up shell environment
             archivist.shell();
         }
-    }
+    }*/
 
     /**
     * Default constructor for class archivist
@@ -308,7 +329,7 @@ class Archivist {
     public String correctOutput(String s)
     {
         //call unwrapTags function from TagUtil.java
-        unwrapTags(s);
+        TagUtil.unwrapTags(s);
         
         String newOutput = ""; // corrected string return variable
         Scanner scan= new Scanner(System.in);
