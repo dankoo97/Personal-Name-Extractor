@@ -65,7 +65,7 @@ tasks.named('jar') {
         attributes(
                 'Implementation-Name': project.name,
                 'Implementation-Version': project.version,
-                'Main-Class': 'edu.odu.cs.cs350.namex.Archivist',
+                'Main-Class': 'edu.odu.cs.cs350.namex.ExtractionDriver',
         )
     }
 }
