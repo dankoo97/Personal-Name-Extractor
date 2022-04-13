@@ -222,8 +222,9 @@ class Archivist {
     }
 
     /**
-    * Attempts to extract personal names from a string s
-    */
+     * Attempts to extract personal names from a string s
+     * @param s the given string to extract
+     */
     public String extract(String s) {
         // TODO: Implement extract string to utilize WEKA library
         return s;
@@ -309,23 +310,26 @@ class Archivist {
     }
 
     /**
-    * Trains archivist using machine learning
-    */
+     * Trains archivist using machine learning
+     * @param trainingData the data for which archivist trains on
+     */
     public void trainArchivist(String[] trainingData) {
 //        Trains machine learning with a corrected string
     }
 
     /**
-    * Compare a given string to the trained output and
-    * return true if they match, else false
-    */
+     * Compare a given string to the trained output and
+     * return true if they match, else false
+     * @param s the given string to compare
+     */
     public boolean compareOutput(String s) {
         return false;
     }
     
     /**
-    * Archivist manually corrects incorrect output and returns new output
-    */
+     * Archivist manually corrects incorrect output and returns new output
+     * @param s the given string to correct
+     */
     public String correctOutput(String s)
     {
         //call unwrapTags function from TagUtil.java
