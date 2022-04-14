@@ -23,6 +23,7 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       - name: Build gradle with official gradle build action
-        uses: gradle/gradle-build-action@wrapper
+        uses: gradle/gradle-build-action@v2
         with:
+          gradle-version: wrapper
           args: build | test
