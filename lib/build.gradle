@@ -93,3 +93,8 @@ tasks.register('publish') {
 tasks.register('systest') {
 
 }
+
+task reports (type: Copy, dependsOn: ':report_accumulator:reports') {
+	from '../report_accumulator/build/reports'
+	into 'build/reports'
+}
