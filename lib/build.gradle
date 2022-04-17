@@ -16,6 +16,9 @@ plugins {
 //    id 'edu.odu.cs.report_accumulator' version '1.4'
 //    id 'org.hidetake.ssh' version '2.10.1'
 
+      id 'java'
+      id 'pmd' // and/or checkstyle, jacoco, spotbugs
+      id 'edu.odu.cs.report_accumulator' version '1.4' 
 }
 
 java {
@@ -94,7 +97,9 @@ tasks.register('systest') {
 
 }
 
-task reports (type: Copy, dependsOn: ':report_accumulator:reports') {
-	from '../report_accumulator/build/reports'
-	into 'build/reports'
+reportStats {
+    reportsURL = 'https://project/reports/url/'
+    htmlSourceDir = file('src/main/html')  // default value
+    reportsDir = file('build/reports') // default value
+    buildID = "12345"                  // defaults to current date, but can be any run identifier
 }
