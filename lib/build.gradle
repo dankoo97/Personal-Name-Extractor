@@ -99,6 +99,7 @@ tasks.named('javadoc'){
    }
    failOnError = false;
 }
+build.dependsOn 'javadoc'
 tasks.register('reports') {
     dependsOn 'test' 
     dependsOn 'javadoc' 
