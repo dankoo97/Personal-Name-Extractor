@@ -9,12 +9,12 @@
 plugins {
     // Apply the java-library plugin for API and implementation separation.
     id 'java-library'
-//    id 'jacoco'
-//    id 'pmd'
-//    id 'com.github.spotbugs' version '5.0.5'
-//    id 'org.jbake.site t'
-//    id 'edu.odu.cs.report_accumulator' version '1.4'
-//    id 'org.hidetake.ssh' version '2.10.1'
+    id 'jacoco'
+   id 'pmd'
+    id 'com.github.spotbugs' version '5.0.5'
+   id 'org.jbake.site ' version '5.5.0'
+    id 'edu.odu.cs.report_accumulator' version '1.4'
+    id 'org.hidetake.ssh' version '2.10.1'
 
       id 'java'
      // id 'pmd' // and/or checkstyle, jacoco, spotbugs
@@ -95,7 +95,8 @@ tasks.register('train') {
 }
 
 tasks.register('reports') {
-
+    dependsOn test 
+    dependsOn javadoc 
 }
 
 //tasks.register('publish') {
@@ -117,4 +118,18 @@ reportStats {
     reportsDir = file('build/reports') // default value
 }
 
-
+task.register('deployReports') {
+     dependsOn reports 
+     doLast {
+        ant.copy (todir: 'gh-pages') {
+            fileset(dir: 'reports')
+            ant.copy (todir: 'gh-pages') {
+            fileset(dir: 'docs') 
+        }
+    }
+}
+task.register ('javadoc'){                  
+   options.with {
+     links 'https://docs.oracle.com/javase/8/docs/api/', 'gradle/javadocs/jdk'
+   }
+   failOnError = false;
