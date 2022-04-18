@@ -118,7 +118,8 @@ task copyWebPages (type: Copy) {
 }
 
 reportStats {
-    reportsURL = 'https://dankoo97.github.io/Personal-Name-Extractor/reports/tests/test/'
+ //  reportsURL = 'https://dankoo97.github.io/Personal-Name-Extractor/reports/tests/test/'
+    reportsURL = 'https://dankoo97.github.io/Personal-Name-Extractor/report-accumulator/'
     htmlSourceDir = file('report-accumulator')  
     reportsDir = file('build/reports') // default value
 }
