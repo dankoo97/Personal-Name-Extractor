@@ -26,7 +26,6 @@ plugins {
     //  id 'com.github.spotbugs'  version '4.7.10'
     //  id 'checkstyle'
       id 'project-report'
-    id 'checkstyle'
 
 }
 
@@ -93,10 +92,15 @@ tasks.register('train') {
     dependsOn 'test'
     println "Training not yet implemented..."
 }
-
+tasks.named('javadoc'){                  
+   options.with {
+     links 'https://docs.oracle.com/javase/8/docs/api/', 'gradle/javadocs/jdk'
+   }
+   failOnError = false;
+}
 tasks.register('reports') {
-    dependsOn test 
-    dependsOn javadoc 
+    dependsOn 'test' 
+    dependsOn 'javadoc' 
 }
 
 //tasks.register('publish') {
@@ -130,22 +134,4 @@ tasks.register('deployReports') {
     }
 }
 
-tasks.named('javadoc'){                  
-   options.with {
-     links 'https://docs.oracle.com/javase/8/docs/api/', 'gradle/javadocs/jdk'
-   }
-   failOnError = false
-}
 
-checkstyle {
-    ignoreFailures = true
-    showViolations = false
-}
-
-tasks.withType(Checkstyle) {
-    reports {
-        html.destination project.file("build/reports/checkstyle/main.html")
-    }
-}
-
-checkstyleTest.enabled = false
