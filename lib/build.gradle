@@ -122,10 +122,7 @@ reportStats {
     htmlSourceDir = file('report-accumulator')  
     reportsDir = file('build/reports') // default value
 }
-task copyDoc (type: Copy) {
-    from 'build/docs'
-    into 'build/gh-pages'
-}
+
 tasks.register('deployReports') {
      dependsOn 'reports' 
     
@@ -133,7 +130,7 @@ tasks.register('deployReports') {
         ant.copy (todir: 'build/gh-pages') {
             fileset(dir: 'build/reports')
         }
-            ant.copy (todir: 'docs/gh-pages/') {
+            ant.copy (todir: 'build/gh-pages') {
             fileset(dir: 'build/docs') 
         }
     }
