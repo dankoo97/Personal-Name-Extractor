@@ -126,11 +126,12 @@ reportStats {
 
 tasks.register('deployReports') {
      dependsOn 'reports' 
+     htmlSourceDir = file('docs')  
      doLast {
         ant.copy (todir: 'build/gh-pages') {
             fileset(dir: 'build/reports')
         }
-            ant.copy (todir: 'docs/build/gh-pages/') {
+            ant.copy (todir: 'docs/gh-pages/') {
             fileset(dir: 'build/docs') 
         }
     }
