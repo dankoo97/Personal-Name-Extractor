@@ -144,7 +144,7 @@ spotbugsMain {
     reports {
         xml.enabled = false
         html.enabled = true
-        csv.enabled = true
+      //  csv.enabled = true
     }
 }
 
