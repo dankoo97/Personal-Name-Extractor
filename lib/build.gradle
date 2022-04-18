@@ -138,5 +138,5 @@ tasks.register('deployReports') {
 
 checkstyle {
     ignoreFailures = true
-    showviolations = false
+    showViolations = false
 }
