@@ -141,3 +141,10 @@ checkstyle {
     ignoreFailures = true
     showViolations = false
 }
+
+tasks.withType(Checkstyle) {
+    reports {
+        html.destination project.file("build/reports/checkstyle/main.html")
+    }
+}
+checkstyleTest.enabled = false
