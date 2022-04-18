@@ -17,7 +17,7 @@ plugins {
 //    id 'org.hidetake.ssh' version '2.10.1'
 
       id 'java'
-      id 'pmd' // and/or checkstyle, jacoco, spotbugs
+     // id 'pmd' // and/or checkstyle, jacoco, spotbugs
       id 'edu.odu.cs.report_accumulator' version '1.4' 
       
       id 'groovy'
@@ -25,7 +25,7 @@ plugins {
       id 'ivy-publish'
     
       id 'com.github.spotbugs'  version '4.7.10'
-      id 'checkstyle'
+    //  id 'checkstyle'
       id 'project-report'
 
 }
@@ -94,9 +94,9 @@ tasks.register('train') {
     println "Training not yet implemented..."
 }
 
-tasks.register('reports') {
+//tasks.register('reports') {
 
-}
+//}
 
 tasks.register('publish') {
 
