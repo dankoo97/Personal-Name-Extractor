@@ -130,7 +130,7 @@ tasks.register('deployReports') {
         ant.copy (todir: 'build/gh-pages') {
             fileset(dir: 'build/reports')
         }
-            ant.copy (todir: 'build/gh-pages/docs') {
+            ant.copy (todir: 'docs/build/gh-pages/') {
             fileset(dir: 'build/docs') 
         }
     }
