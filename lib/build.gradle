@@ -150,3 +150,10 @@ spotbugsMain {
 }
 
 spotbugsTest.enabled = false
+
+pmd {
+    ignoreFailures = true
+    consoleOutput = false
+}
+
+pmdTest.enabled = false
