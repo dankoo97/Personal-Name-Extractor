@@ -124,7 +124,7 @@ reportStats {
 }
 
 tasks.register('deployReports') {
-     dependsOn reports 
+     dependsOn 'reports' 
      doLast {
         ant.copy (todir: 'build/gh-pages') {
             fileset(dir: 'build/reports')
