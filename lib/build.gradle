@@ -26,6 +26,7 @@ plugins {
     //  id 'com.github.spotbugs'  version '4.7.10'
     //  id 'checkstyle'
       id 'project-report'
+    id 'checkstyle'
 
 }
 
@@ -133,5 +134,18 @@ tasks.named('javadoc'){
    options.with {
      links 'https://docs.oracle.com/javase/8/docs/api/', 'gradle/javadocs/jdk'
    }
-   failOnError = false;
+   failOnError = false
 }
+
+checkstyle {
+    ignoreFailures = true
+    showViolations = false
+}
+
+tasks.withType(Checkstyle) {
+    reports {
+        html.destination project.file("build/reports/checkstyle/main.html")
+    }
+}
+
+checkstyleTest.enabled = false
