@@ -6,6 +6,6 @@ Dan Koontz
 Kelsey Marantan
 Curtis Thornton
 
-* [Tests](./report-accumulator/reports)
-* [JavaDoc](./docs/javadoc/)
+* [Tests](./build/reports/tests/test/)
+* [JavaDoc](./build/docs/javadoc/)
 * [Test Graphs](./report-accumulator)
