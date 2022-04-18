@@ -98,6 +98,7 @@ tasks.named('javadoc'){
    }
    failOnError = false;
 }
+build.dependsOn 'javadoc'
 tasks.register('reports') {
     dependsOn 'test' 
     dependsOn 'javadoc' 
@@ -124,11 +125,12 @@ reportStats {
 
 tasks.register('deployReports') {
      dependsOn 'reports' 
+     htmlSourceDir = file('docs')  
      doLast {
         ant.copy (todir: 'build/gh-pages') {
             fileset(dir: 'build/reports')
         }
-            ant.copy (todir: 'gh-pages') {
+            ant.copy (todir: 'docs/gh-pages/') {
             fileset(dir: 'build/docs') 
         }
     }
