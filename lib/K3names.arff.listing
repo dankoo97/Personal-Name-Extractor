@@ -1,0 +1,120 @@
+@relation names
+
+% Total dimensions = 102
+% K = -3
+@attribute Lexical0 {CapLetter, capitalized, number, punctuation, NewLine, ALLCAPS, null, other}
+@attribute PoS0 {article, conjunction, period, comma, hyphen, prepositions, other}
+@attribute Dict0 numeric
+@attribute City0 numeric
+@attribute Country0 numeric
+@attribute Places0 numeric
+@attribute DTICFirst0 numeric
+@attribute DTICLast0 numeric
+@attribute CommonFirst0 numeric
+@attribute CommonLast0 numeric
+@attribute Honorific0 numeric
+@attribute Prefix0 numeric
+@attribute Suffix0 numeric
+@attribute Kill0 numeric
+@attribute PartOfPersonalName0 {BP, CP, other}
+
+% K = -2
+@attribute Lexical1 {CapLetter, capitalized, number, punctuation, NewLine, ALLCAPS, null, other}
+@attribute PoS1 {article, conjunction, period, comma, hyphen, prepositions, other}
+@attribute Dict1 numeric
+@attribute City1 numeric
+@attribute Country1 numeric
+@attribute Places1 numeric
+@attribute DTICFirst1 numeric
+@attribute DTICLast1 numeric
+@attribute CommonFirst1 numeric
+@attribute CommonLast1 numeric
+@attribute Honorific1 numeric
+@attribute Prefix1 numeric
+@attribute Suffix1 numeric
+@attribute Kill1 numeric
+@attribute PartOfPersonalName1 {BP, CP, other}
+
+% K = -1
+@attribute Lexical2 {CapLetter, capitalized, number, punctuation, NewLine, ALLCAPS, null, other}
+@attribute PoS2 {article, conjunction, period, comma, hyphen, prepositions, other}
+@attribute Dict2 numeric
+@attribute City2 numeric
+@attribute Country2 numeric
+@attribute Places2 numeric
+@attribute DTICFirst2 numeric
+@attribute DTICLast2 numeric
+@attribute CommonFirst2 numeric
+@attribute CommonLast2 numeric
+@attribute Honorific2 numeric
+@attribute Prefix2 numeric
+@attribute Suffix2 numeric
+@attribute Kill2 numeric
+@attribute PartOfPersonalName2 {BP, CP, other}
+
+% K = 0
+@attribute Lexical3 {CapLetter, capitalized, number, punctuation, NewLine, ALLCAPS, null, other}
+@attribute PoS3 {article, conjunction, period, comma, hyphen, prepositions, other}
+@attribute Dict3 numeric
+@attribute City3 numeric
+@attribute Country3 numeric
+@attribute Places3 numeric
+@attribute DTICFirst3 numeric
+@attribute DTICLast3 numeric
+@attribute CommonFirst3 numeric
+@attribute CommonLast3 numeric
+@attribute Honorific3 numeric
+@attribute Prefix3 numeric
+@attribute Suffix3 numeric
+@attribute Kill3 numeric
+
+% K = 1
+@attribute Lexical4 {CapLetter, capitalized, number, punctuation, NewLine, ALLCAPS, null, other}
+@attribute PoS4 {article, conjunction, period, comma, hyphen, prepositions, other}
+@attribute Dict4 numeric
+@attribute City4 numeric
+@attribute Country4 numeric
+@attribute Places4 numeric
+@attribute DTICFirst4 numeric
+@attribute DTICLast4 numeric
+@attribute CommonFirst4 numeric
+@attribute CommonLast4 numeric
+@attribute Honorific4 numeric
+@attribute Prefix4 numeric
+@attribute Suffix4 numeric
+@attribute Kill4 numeric
+
+% K = 2
+@attribute Lexical5 {CapLetter, capitalized, number, punctuation, NewLine, ALLCAPS, null, other}
+@attribute PoS5 {article, conjunction, period, comma, hyphen, prepositions, other}
+@attribute Dict5 numeric
+@attribute City5 numeric
+@attribute Country5 numeric
+@attribute Places5 numeric
+@attribute DTICFirst5 numeric
+@attribute DTICLast5 numeric
+@attribute CommonFirst5 numeric
+@attribute CommonLast5 numeric
+@attribute Honorific5 numeric
+@attribute Prefix5 numeric
+@attribute Suffix5 numeric
+@attribute Kill5 numeric
+
+% K = 3
+@attribute Lexical6 {CapLetter, capitalized, number, punctuation, NewLine, ALLCAPS, null, other}
+@attribute PoS6 {article, conjunction, period, comma, hyphen, prepositions, other}
+@attribute Dict6 numeric
+@attribute City6 numeric
+@attribute Country6 numeric
+@attribute Places6 numeric
+@attribute DTICFirst6 numeric
+@attribute DTICLast6 numeric
+@attribute CommonFirst6 numeric
+@attribute CommonLast6 numeric
+@attribute Honorific6 numeric
+@attribute Prefix6 numeric
+@attribute Suffix6 numeric
+@attribute Kill6 numeric
+
+@attribute PartOfPersonalNameFinal {BP, CP, other}
+@data
