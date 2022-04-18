@@ -26,6 +26,7 @@ plugins {
     //  id 'com.github.spotbugs'  version '4.7.10'
     //  id 'checkstyle'
       id 'project-report'
+    id 'checkstyle'
 
 }
 
@@ -135,3 +136,7 @@ tasks.register('deployReports') {
 }
 
 
+checkstyle {
+    ignoreFailures = true
+    showviolations = false
+}
