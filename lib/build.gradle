@@ -98,8 +98,7 @@ tasks.register('systest') {
 }
 
 reportStats {
-    reportsURL = 'https://project/reports/url/'
-    htmlSourceDir = file('src/main/html')  // default value
+    reportsURL = 'https://dankoo97.github.io/Personal-Name-Extractor/reports/tests/test/'
+    htmlSourceDir = file('report-accumulator')  
     reportsDir = file('build/reports') // default value
-    buildID = "12345"                  // defaults to current date, but can be any run identifier
 }
