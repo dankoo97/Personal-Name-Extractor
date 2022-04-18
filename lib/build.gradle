@@ -26,7 +26,6 @@ plugins {
     //  id 'com.github.spotbugs'  version '4.7.10'
     //  id 'checkstyle'
       id 'project-report'
-    id 'checkstyle'
 
 }
 
@@ -140,16 +139,14 @@ tasks.register('deployReports') {
     }
 }
 
-
-
-checkstyle {
+spotbugsMain {
     ignoreFailures = true
-    showViolations = false
-}
-
-tasks.withType(Checkstyle) {
+    effort = 'max'
+    reportLevel = 'medium'
     reports {
-        html.destination project.file("build/reports/checkstyle/main.html")
+        xml.enabled = false
+        html.enabled = true
     }
 }
-checkstyleTest.enabled = false
+
+spotbugsTest.enabled = false
