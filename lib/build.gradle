@@ -94,13 +94,13 @@ tasks.register('train') {
     println "Training not yet implemented..."
 }
 
-//tasks.register('reports') {
-
-//}
-
-tasks.register('publish') {
+tasks.register('reports') {
 
 }
+
+//tasks.register('publish') {
+
+//}
 
 tasks.register('systest') {
 
