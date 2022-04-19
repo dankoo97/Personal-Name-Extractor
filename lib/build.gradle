@@ -156,3 +156,31 @@ pmd {
 }
 
 pmdTest.enabled = false
+
+test {
+    reports {
+        junitXml.enabled = false
+        html.enabled = true
+    }
+}
+
+test {
+    finalizedBy jacocoTestReport
+//    finalizedBy unitTestReport
+    ignoreFailures = true
+    useJUnitPlatform()
+    testLogging {
+        showStandardStreams = true
+    }
+    reports {
+        html.enabled = true
+    }
+}
+
+jacocoTestReport {
+    dependsOn test
+    reports {
+        html.enabled true
+        csv.enabled true
+    }
+}
