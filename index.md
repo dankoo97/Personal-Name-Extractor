@@ -7,5 +7,5 @@ Kelsey Marantan
 Curtis Thornton
 
 * [Tests](./report-accumulator/reports/tests/test/)
-* [JavaDoc](./build/docs/javadoc/)
+* [JavaDoc](./report-accumulator/javadoc/)
 * [Test Graphs](./report-accumulator/)
