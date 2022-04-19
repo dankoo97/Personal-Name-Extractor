@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Archivist.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">lib</a> &gt; <a href="index.source.html" class="el_package">edu.odu.cs.cs350.namex</a> &gt; <span class="el_source">Archivist.java</span></div><h1>Archivist.java</h1><pre class="source lang-java linenums">package edu.odu.cs.cs350.namex;
+
+import edu.odu.cs.cs350.namex.tools.TagUtil;
+import org.apache.commons.io.FilenameUtils;
+import weka.classifiers.functions.SMO;
+import weka.core.Instances;
+import weka.core.converters.ConverterUtils.DataSource;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+class Archivist {
+
+    /** Training data gathered so far */
+<span class="pc" id="L23">    private Instances data = null;</span>
+
+    /** The classifier used for machine learning */
+<span class="pc" id="L26">    private SMO svm = null;</span>
+
+    /*
+    public static void main(String[] args) {
+        Archivist archivist = new Archivist();
+        if (args.length &gt; 0)
+        {
+
+            switch (args[0].toLowerCase()) {
+                case &quot;extract-file&quot;:
+                    try {
+                        archivist.extract(new File(String.valueOf(Path.of(args[1]))));
+                    } catch (IOException e) {
+                        System.out.println(&quot;Error: unable to find file&quot;);
+                    }
+                    break;
+                case &quot;extract-string&quot;:
+                    System.out.println(archivist.extract(args[1]));
+                    break;
+                case &quot;shell&quot;:
+                    archivist.shell();
+                    break;
+                case &quot;help&quot;:
+                    System.out.println(helpCommands());
+                    break;
+                default:
+                    System.out.println(&quot;Unable to decipher you command, here are some valid commands:&quot;);
+                    System.out.println(helpCommands());
+            }
+
+          //Creating a function that checks to see if string is a valid file path
+      //Not 100 percent functional
+//            public static boolean validFilePath
+//    try {
+//       path.get(path);
+//   } catch (InvalidPathException | NullPointerException ex) {
+//           return false;
+//        }
+//        return true;
+//    }
+//
+//        // Another possible tester for string input and output statements
+//
+//        public class Scanner{
+//            Scanner in = new Scanner(System.in);
+//            System.out.print (&quot;Enter something here&quot;);
+//            stringStatement = in.nextLine();
+//            system.out.println(User input is: &quot;+ Statement);
+//            in.close();
+
+
+
+//            Try to run a command based on user CLI input using switch statement
+//            Possible preliminary commands:
+//                shell
+//                extract-names (file|string|directory)
+//                train (file|string|directory)
+//
+//            If unable, throw Error
+        } else {
+//            Open up shell environment
+            archivist.shell();
+        }
+    }*/
+
+    /**
+    * Default constructor for class archivist
+    */
+<span class="fc" id="L94">    public Archivist() {</span>
+//        Load in trained archivist from a default file
+<span class="fc" id="L96">    }</span>
+
+    /**
+     * Creates an archivist trained from a given file
+     * @param file file to read Arff data from
+     * @throws Exception cannot find file or file is unable to be read
+     */
+<span class="nc" id="L103">    public Archivist(File file) throws Exception {</span>
+<span class="nc" id="L104">        DataSource source = new DataSource(file.getAbsolutePath());</span>
+<span class="nc" id="L105">        Instances dataSet = source.getDataSet();</span>
+
+        // TODO: Should this be changed to look for the labelled attribute or stay as last?
+<span class="nc" id="L108">        dataSet.setClassIndex(dataSet.numClasses() - 1);</span>
+<span class="nc" id="L109">    }</span>
+
+    /**
+     * Creates an Arff file for training the machine learning algorithm
+     * @param k the value of k for shingling
+     * @param trainingData data used for training
+     * @return arff file
+     */
+    public static File createARFFWithShingling(int k, String[] trainingData) {
+        // TODO: Fix given path
+<span class="fc" id="L119">        File output = new File(&quot;K&quot; + k + &quot;names.arff.listing&quot;);</span>
+<span class="fc" id="L120">        InputStream ArffFormat = Archivist.class.getClassLoader().getResourceAsStream(&quot;arff_formatting.txt&quot;);</span>
+
+<span class="fc" id="L122">        String relation = &quot;&quot;;</span>
+<span class="fc" id="L123">        ArrayList&lt;String&gt; attributes = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L124">        ArrayList&lt;String&gt; data = new ArrayList&lt;&gt;();</span>
+
+        try {
+<span class="fc" id="L127">            Scanner reader = new Scanner(ArffFormat);</span>
+
+            // Read from formatting file
+<span class="fc bfc" id="L130" title="All 2 branches covered.">            while (reader.hasNext()) {</span>
+<span class="fc" id="L131">                String line = reader.nextLine();</span>
+<span class="fc bfc" id="L132" title="All 2 branches covered.">                if (line.toLowerCase().startsWith(&quot;@relation&quot;)) {</span>
+<span class="fc" id="L133">                    relation = line;</span>
+<span class="fc bfc" id="L134" title="All 2 branches covered.">                } else if (line.toLowerCase().startsWith(&quot;@attribute&quot;)) {</span>
+<span class="fc" id="L135">                    attributes.add(line);</span>
+                }
+<span class="fc" id="L137">            }</span>
+
+            // Write relation
+<span class="fc" id="L140">            FileWriter writer = new FileWriter(output);</span>
+<span class="fc" id="L141">            writer.write(relation + &quot;\n\n&quot;);</span>
+<span class="fc" id="L142">            writer.flush();</span>
+
+            // Write attributes
+<span class="fc" id="L145">            writer.write(&quot;% Total dimensions = &quot; + ((2 * k + 1) * (attributes.size() - 1) + k + 1) + &quot;\n&quot;);</span>
+<span class="fc bfc" id="L146" title="All 2 branches covered.">            for (int i = 0; i &lt; 2*k + 1; i++) {</span>
+<span class="fc" id="L147">                writer.write(&quot;% K = &quot; + (i - k) + &quot;\n&quot;);</span>
+<span class="fc bfc" id="L148" title="All 4 branches covered.">                for (int j = 0; j &lt; (i &lt; k ? attributes.size() : attributes.size() - 1); j++) {</span>
+<span class="fc" id="L149">                    String writeText = String.join(String.valueOf(i), attributes.get(j).split(&quot;\\{num}&quot;)) + &quot;\n&quot;;</span>
+<span class="fc" id="L150">                    writer.write(writeText);</span>
+                }
+<span class="fc" id="L152">                writer.write(&quot;\n&quot;);</span>
+            }
+
+            // Simplify indexing by making the last attribute the one we classify
+<span class="fc" id="L156">            writer.write(&quot;@attribute PartOfPersonalNameFinal {BP, CP, other}\n&quot;);</span>
+<span class="fc" id="L157">            writer.flush();</span>
+
+            // TODO: From data create instances to write out
+<span class="fc" id="L160">            writer.write(&quot;@data\n&quot;);</span>
+<span class="pc bpc" id="L161" title="1 of 2 branches missed.">            for (String s : data) {</span>
+<span class="nc" id="L162">                writer.write(s);</span>
+<span class="nc" id="L163">                writer.flush();</span>
+<span class="nc" id="L164">            }</span>
+
+<span class="fc" id="L166">            writer.close();</span>
+
+<span class="nc" id="L168">        } catch (IOException e) {</span>
+<span class="nc" id="L169">            e.printStackTrace();</span>
+<span class="fc" id="L170">        }</span>
+
+<span class="fc" id="L172">        return output;</span>
+    }
+
+    /**
+     * Creates an Arff file for training the machine learning algorithm
+     * @param k the value of k for shingling
+     * @param trainingDataFile data used for training
+     * @throws IOException in case file not found or unable to be read
+     */
+    public static File createARFFWithShingling(int k, File trainingDataFile) throws IOException {
+<span class="nc" id="L182">        Scanner scanner = new Scanner(trainingDataFile);</span>
+<span class="nc" id="L183">        scanner.useDelimiter(&quot;(?&lt;=&lt;/NER&gt;)[\\s\\S]*?(?=&lt;NER&gt;)&quot;);</span>
+
+<span class="nc" id="L185">        List&lt;String&gt; data = new ArrayList&lt;&gt;();</span>
+
+<span class="nc bnc" id="L187" title="All 2 branches missed.">        while (scanner.hasNext()) {</span>
+<span class="nc" id="L188">            data.add(scanner.next());</span>
+        }
+
+<span class="nc" id="L191">        scanner.close();</span>
+
+<span class="nc" id="L193">        return Archivist.createARFFWithShingling(k, data.toArray(new String[]{}));</span>
+    }
+
+    public void shell() {
+<span class="nc" id="L197">        boolean cont = true;</span>
+
+<span class="nc bnc" id="L199" title="All 2 branches missed.">        while (cont) {</span>
+<span class="nc" id="L200">            System.out.println(&quot;Please enter a command. Enter \&quot;help\&quot; for a list of commands&quot;);</span>
+<span class="nc" id="L201">            Scanner scan = new Scanner(System.in);</span>
+
+<span class="nc" id="L203">            cont = false;</span>
+<span class="nc" id="L204">        }</span>
+<span class="nc" id="L205">    }</span>
+
+    /**
+     * Provides help commands to the user
+     * @return manual as a string
+     */
+    private static String helpCommands() {
+//        Extractions
+//        Extract from string
+//        Extract from file
+//        Extract from directory
+//
+//        Train program
+//        Given corrected output, train to match
+//
+//        Exit shell
+<span class="nc" id="L221">        return &quot;&quot;;</span>
+    }
+
+    /**
+     * Attempts to extract personal names from a string s
+     * @param s the given string to extract
+     */
+    public String extract(String s) {
+        // TODO: Implement extract string to utilize WEKA library
+<span class="fc" id="L230">        return s;</span>
+    }
+
+    /**
+     * Attempts to extract personal names from a file f and writes the output to a new file at path p
+     * without changing the original unless the path p matches f, in which case the file is overwritten.
+     * Calls extract(String) for every string wrapped in the proper tags
+     * @param readFrom file to read from
+     * @param path path to new file
+     * @return extracted file
+     * @throws IOException unable to read file
+     */
+    public File extract(File readFrom, Path path) throws IOException {
+        // TODO: If file at path already exists should this request confirmation to replace file?
+//        Possible files:
+//        1. File text without tags
+//        2. File is made up of one or more strings properly wrapped by tags
+//        3. File is not a readable text file
+
+        // Check that the file can be read from
+<span class="pc bpc" id="L250" title="1 of 2 branches missed.">        if (!readFrom.canRead()) {</span>
+<span class="nc" id="L251">            throw new IOException(&quot;Unable to read file.&quot;);</span>
+        }
+
+        // Read from file and build a string
+<span class="fc" id="L255">        Scanner reader = new Scanner(readFrom);</span>
+<span class="fc" id="L256">        StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L257" title="All 2 branches covered.">        while (reader.hasNextLine()) {</span>
+<span class="fc" id="L258">            sb.append(reader.nextLine());</span>
+<span class="fc" id="L259">            sb.append(System.lineSeparator());</span>
+        }
+<span class="fc" id="L261">        reader.close();</span>
+<span class="fc" id="L262">        String contents = sb.toString();</span>
+
+        // Split contents into individual extractable strings
+<span class="fc" id="L265">        String regex = &quot;&lt;NER&gt;[\\s\\S]*?&lt;/NER&gt;&quot;;</span>
+<span class="fc" id="L266">        Pattern pattern = Pattern.compile(regex);</span>
+<span class="fc" id="L267">        Matcher matcher = pattern.matcher(contents);</span>
+
+        // If the file is not properly wrapped by &lt;NER&gt; tags, wrap the entire contents of the text file
+        String writeText;
+<span class="pc bpc" id="L271" title="1 of 2 branches missed.">        if (matcher.groupCount() == 0) {</span>
+<span class="fc" id="L272">            String results = TagUtil.wrapStringByTag(&quot;NER&quot;, contents);</span>
+<span class="fc" id="L273">            writeText = this.extract(results);</span>
+<span class="fc" id="L274">        } else {</span>
+            // Extract personal names from each matching group and replace
+<span class="nc" id="L276">            StringBuilder results = new StringBuilder();</span>
+<span class="nc bnc" id="L277" title="All 2 branches missed.">            while (matcher.find()) {</span>
+<span class="nc" id="L278">                String s = matcher.group();</span>
+<span class="nc" id="L279">                matcher.appendReplacement(results, this.extract(s));</span>
+<span class="nc" id="L280">            }</span>
+<span class="nc" id="L281">            matcher.appendTail(results);</span>
+<span class="nc" id="L282">            writeText = results.toString();</span>
+        }
+
+        // Write to the final path
+<span class="fc" id="L286">        File writeTo = path.toFile();</span>
+<span class="fc" id="L287">        FileWriter writer = new FileWriter(writeTo);</span>
+<span class="fc" id="L288">        writer.write(writeText);</span>
+<span class="fc" id="L289">        writer.flush();</span>
+<span class="fc" id="L290">        writer.close();</span>
+
+<span class="fc" id="L292">        return writeTo;</span>
+    }
+
+
+    /** Calls extract(f, f.fileBaseName + &quot;_MarkedPersonalNames&quot; + f.fileExtension)
+     * @param file file to be extracted
+     * @return extracted file
+     * @throws IOException unable to read file
+     */
+    public File extract(File file) throws IOException {
+        // Temp fix for file extension
+<span class="fc" id="L303">        Path p = Path.of(</span>
+<span class="fc" id="L304">                file.getParent() +</span>
+                        File.separator +
+<span class="fc" id="L306">                        FilenameUtils.getBaseName(file.getAbsolutePath()) +</span>
+                        &quot;_MarkedPersonalNames.&quot; +
+<span class="fc" id="L308">                        FilenameUtils.getExtension(file.getAbsolutePath()));</span>
+<span class="fc" id="L309">        return extract(file, p);</span>
+    }
+
+    /**
+     * Trains archivist using machine learning
+     * @param trainingData the data for which archivist trains on
+     */
+    public void trainArchivist(String[] trainingData) {
+//        Trains machine learning with a corrected string
+<span class="nc" id="L318">    }</span>
+
+    /**
+     * Compare a given string to the trained output and
+     * return true if they match, else false
+     * @param s the given string to compare
+     */
+    public boolean compareOutput(String s) {
+<span class="fc" id="L326">        return false;</span>
+    }
+    
+    /**
+     * Archivist manually corrects incorrect output and returns new output
+     * @param s the given string to correct
+     */
+    public String correctOutput(String s)
+    {
+        //call unwrapTags function from TagUtil.java
+<span class="fc" id="L336">        TagUtil.unwrapTags(s);</span>
+        
+<span class="fc" id="L338">        String newOutput = &quot;&quot;; // corrected string return variable</span>
+<span class="fc" id="L339">        Scanner scan= new Scanner(System.in);</span>
+        
+        // Ask Archivist to manually correct wrong output string
+<span class="fc" id="L342">        System.out.println(&quot;Enter the string marked up correctly&quot;);</span>
+<span class="nc" id="L343">        newOutput=scan.nextLine();</span>
+          
+<span class="nc" id="L345">        return newOutput;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

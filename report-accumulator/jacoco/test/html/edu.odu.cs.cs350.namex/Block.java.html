@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Block.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">lib</a> &gt; <a href="index.source.html" class="el_package">edu.odu.cs.cs350.namex</a> &gt; <span class="el_source">Block.java</span></div><h1>Block.java</h1><pre class="source lang-java linenums">package edu.odu.cs.cs350.namex;
+
+import java.util.ArrayList;
+
+public class Block {
+    String text;
+    ArrayList&lt;Token&gt; tokens;
+
+    /**
+     * Constructor
+     * 
+     * @param s the string that will form the Block's text
+     */
+<span class="fc" id="L14">    public Block(String s) {</span>
+<span class="fc" id="L15">        text = s;</span>
+<span class="fc" id="L16">    }</span>
+
+    /**
+     * Outputs block of text with tags around
+     * each personal name
+     */
+    public String outputMarkedNames() {
+<span class="fc" id="L23">        StringBuffer markedUpText = new StringBuffer();</span>
+
+<span class="fc bfc" id="L25" title="All 2 branches covered.">        for (Token t : tokens) {</span>
+            // if the token is the start of a name, add a tag before adding the name
+<span class="pc bpc" id="L27" title="1 of 2 branches missed.">            if (t.isBeginningOfName()) {</span>
+<span class="nc" id="L28">                markedUpText.append(&quot;&lt;PER&gt;&quot;);</span>
+<span class="nc" id="L29">                markedUpText.append(t.getRawToken());</span>
+            }
+            // if the token is the end of a name, add a tag after adding the name
+<span class="pc bpc" id="L32" title="1 of 2 branches missed.">            else if (t.isEndOfName()) {</span>
+<span class="nc" id="L33">                markedUpText.append(t.getRawToken());</span>
+<span class="nc" id="L34">                markedUpText.append(&quot;&lt;/PER&gt;&quot;);</span>
+            }
+            // otherwise, the token is not part of a name, or the continuation of a name, so
+            // can be appended by itself
+            else {
+<span class="fc" id="L39">                markedUpText.append(t.getRawToken());</span>
+            }
+<span class="fc" id="L41">        }</span>
+<span class="fc" id="L42">        return markedUpText.toString();</span>
+    }
+
+    /**
+     * Separates text into individual tokens for each
+     * word in the text
+     */
+    public void separateIntoTokens() {
+<span class="fc" id="L50">        tokens = new ArrayList&lt;&gt;();</span>
+
+        // split the text into its individual words
+        // and create Tokens
+<span class="fc bfc" id="L54" title="All 2 branches covered.">        for (String word : text.split(&quot; &quot;)) {</span>
+<span class="fc" id="L55">            Token t = new Token(word);</span>
+<span class="fc" id="L56">            tokens.add(t);</span>
+        }
+
+<span class="fc" id="L59">    }</span>
+
+    /**
+     * 
+     * @return an ArrayList of Tokens, each Token is a word from
+     *         the block of text
+     */
+    public ArrayList&lt;Token&gt; getTokens() {
+<span class="fc" id="L67">        return tokens;</span>
+    }
+
+    /**
+     * 
+     * @return string that forms the text block
+     */
+    public String getText() {
+<span class="fc" id="L75">        return text;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
