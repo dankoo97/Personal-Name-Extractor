@@ -8,4 +8,4 @@ Curtis Thornton
 
 * [Tests](./report-accumulator/reports/tests/test/)
 * [JavaDoc](./report-accumulator/javadoc/)
-* [Test Graphs](./report-accumulator/)
+* [Systems Reports](./report-accumulator/jacoco/test/html/)
