@@ -17,6 +17,8 @@ public class Block {
 
     /**
      * Outputs block of text with tags around each personal name
+     *
+     * @return Returns string with marked up names
      */
     public String outputMarkedNames() {
         StringBuffer markedUpText = new StringBuffer();
