@@ -92,13 +92,18 @@ tasks.register('train') {
     dependsOn 'test'
     println "Training not yet implemented..."
 }
-tasks.named('javadoc'){                  
-   options.with {
-     links 'https://docs.oracle.com/javase/8/docs/api/', 'gradle/javadocs/jdk'
-   }
-   failOnError = false;
+
+tasks.named('javadoc') {
+    source = sourceSets.main.allJava
+    options.with {
+        links 'https://docs.oracle.com/javase/8/docs/api/'
+    }
+    failOnError = false
 }
+
 build.dependsOn 'javadoc'
+
+
 tasks.register('reports') {
     dependsOn 'test' 
     dependsOn 'javadoc' 
