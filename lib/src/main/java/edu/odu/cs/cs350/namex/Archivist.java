@@ -193,6 +193,9 @@ class Archivist {
         return Archivist.createARFFWithShingling(k, data.toArray(new String[]{}));
     }
 
+    /**
+     * Creates a shell environment to run archivist tasks in
+     */
     public void shell() {
         boolean cont = true;
 
