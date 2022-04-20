@@ -16,8 +16,7 @@ public class Block {
     }
 
     /**
-     * Outputs block of text with tags around
-     * each personal name
+     * Outputs block of text with tags around each personal name
      */
     public String outputMarkedNames() {
         StringBuffer markedUpText = new StringBuffer();
@@ -43,8 +42,7 @@ public class Block {
     }
 
     /**
-     * Separates text into individual tokens for each
-     * word in the text
+     * Separates text into individual tokens for each word in the text
      */
     public void separateIntoTokens() {
         tokens = new ArrayList<>();
@@ -60,8 +58,7 @@ public class Block {
 
     /**
      * 
-     * @return an ArrayList of Tokens, each Token is a word from
-     *         the block of text
+     * @return an ArrayList of Tokens, each Token is a word from the block of text
      */
     public ArrayList<Token> getTokens() {
         return tokens;
