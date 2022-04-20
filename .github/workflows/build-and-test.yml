@@ -18,6 +18,7 @@ jobs:
         with:
           java-version: '11'
           distribution: 'adopt'
+          cache: gradle
       - name: Validate gradle wrapper using official gradle validation action
         uses: gradle/wrapper-validation-action@v1
       - name: Grant execute permission for gradlew
