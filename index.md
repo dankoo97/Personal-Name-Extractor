@@ -7,5 +7,5 @@ Kelsey Marantan
 Curtis Thornton
 
 * [Tests](./report-accumulator/reports/tests/test/)
-* [JavaDoc](./report-accumulator/javadoc/)
+* [JavaDoc](./lib/docs/gh-pages/javadoc/)
 * [System Coverage](./report-accumulator/jacoco/test/html/)
