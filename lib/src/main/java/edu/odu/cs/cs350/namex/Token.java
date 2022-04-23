@@ -1,17 +1,19 @@
 package edu.odu.cs.cs350.namex;
 
 public class Token {
-    String rawToken;
-    Token nextToken;
+    private String rawToken;
+    private Token nextToken;
+    private Token previousToken;
 
-    enum TokenClassification {
+    private enum TokenClassification {
         NOTNAME,
         STARTOFNAME,
         PARTOFNAME,
         ENDOFNAME,
     }
 
-    FeatureSet features;
+    private TokenClassification classification;
+    private FeatureSet features;
 
     /**
      * Constructor
@@ -31,7 +33,7 @@ public class Token {
      *         name or not
      */
     public boolean isBeginningOfName() {
-        return false; // placeholder
+        return (classification == TokenClassification.STARTOFNAME);
     }
 
     /**
@@ -41,7 +43,36 @@ public class Token {
      * @return if token is the end of a name or not
      */
     public boolean isEndOfName() {
-        return false; // placeholder
+        return (classification == TokenClassification.ENDOFNAME);
+    }
+
+    /**
+     * Determines if the token represents a part of the name,
+     * as in a continuation
+     * 
+     * @return if token is part of a name
+     */
+    public boolean isPartOfName() {
+        return (classification == TokenClassification.PARTOFNAME);
+    }
+
+    /**
+     * Determines if the token does not represent a name
+     * 
+     * @return if token isn't a name
+     */
+    public boolean isNotAName() {
+        return (classification == TokenClassification.NOTNAME);
+    }
+
+    /**
+     * Examines the token's features and classifies it as either
+     * not a name, the start of a name, part (or continuation)
+     * of name, and end of a name
+     */
+    public void classifyToken() {
+
+        features.defineFeatures(rawToken);
     }
 
     /**
@@ -51,5 +82,24 @@ public class Token {
      */
     public String getRawToken() {
         return rawToken;
+    }
+
+    /**
+     * Sets the token that comes before the current
+     * token
+     * 
+     * @param t the token that comes before
+     */
+    public void setPreviousToken(Token t) {
+        previousToken = t;
+    }
+
+    /**
+     * Sets the token that comes after the current token
+     * 
+     * @param t the token that comes after
+     */
+    public void setNextToken(Token t) {
+        nextToken = t;
     }
 }
