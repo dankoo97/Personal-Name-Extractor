@@ -1,21 +1,22 @@
 package edu.odu.cs.cs350.namex;
 
-import java.util.Map;
-import java.util.HashMap;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.*;
 
-import javax.lang.model.util.ElementScanner14;
+//import javax.lang.model.util.ElementScanner14;
 
 public class FeatureSet {
     private Map<String, Integer> featureValues = new HashMap<String, Integer>(); // mapped collection of features to
                                                                                  // values
 
-    private String[] firstNames = new String[] { "Elizabeth", "Michael", "Jessica", "John" };
-    private String[] lastNames = new String[] { "Smith", "Gomez", "Schmidt", "Jones" };
-    private String[] articles = new String[] { "a", "an", "the" };
-    private String[] killWords = new String[] { "Institute", "Memorial", "Bridge", "Street", "Department",
+    private static Set<String> firstNames = new HashSet<String>();
+    private static Set<String> lastNames = new HashSet<String>();
+    private static String[] articles = new String[] { "a", "an", "the" };
+    private static String[] killWords = new String[] { "Institute", "Memorial", "Bridge", "Street", "Department",
             "College", "University" }; // words that would indicate it's not part of a name
-    private String[] honorifics = new String[] { "Mr.", "Ms.", "Mrs.", "Dr." };
-    private String[] suffixes = new String[] { "Sr.", "Jr.", "I", "II", "III", "IV", "V" };
+    private static String[] honorifics = new String[] { "Mr.", "Ms.", "Mrs.", "Dr." };
+    private static String[] suffixes = new String[] { "Sr.", "Jr.", "I", "II", "III", "IV", "V" };
 
     public FeatureSet() {
 
@@ -61,13 +62,7 @@ public class FeatureSet {
      * @param word the word to be evaluated
      */
     private void determineIfFirstName(String word) {
-        for (String firstName : firstNames) {
-            if (firstName.equalsIgnoreCase(word))
-                featureValues.put("First Name", 1);
-        }
-
-        if (!featureValues.containsKey("First Name"))
-            featureValues.put("First Name", 0);
+        featureValues.put("First Name", firstNames.contains(word) ? 1 : 0);
     }
 
     /**
@@ -147,10 +142,16 @@ public class FeatureSet {
      * @return the value associated with that feature
      */
     public Integer getFeature(String feature) {
-        if (featureValues.containsKey(feature))
-            return featureValues.get(feature);
-        else
-            return -1;
+        return featureValues.getOrDefault(feature, -1);
+    }
+
+    public void readNamesFromFirstNameFile(File fnameFile) throws FileNotFoundException {
+        Scanner scanner = new Scanner(fnameFile);
+
+        while (scanner.hasNext()) {
+            String name = scanner.nextLine();
+            firstNames.add(name);
+        }
     }
 
 }
