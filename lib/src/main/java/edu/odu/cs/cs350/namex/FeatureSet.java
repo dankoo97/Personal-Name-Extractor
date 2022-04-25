@@ -7,11 +7,11 @@ import java.util.*;
 //import javax.lang.model.util.ElementScanner14;
 
 public class FeatureSet {
-    private Map<String, Integer> featureValues = new HashMap<String, Integer>(); // mapped collection of features to
+    private Map<String, Integer> featureValues = new HashMap<>(); // mapped collection of features to
                                                                                  // values
 
-    private static Set<String> firstNames = new HashSet<String>();
-    private static Set<String> lastNames = new HashSet<String>();
+    private static Set<String> firstNames = new HashSet<>();
+    private static Set<String> lastNames = new HashSet<>();
     private static String[] articles = new String[] { "a", "an", "the" };
     private static String[] killWords = new String[] { "Institute", "Memorial", "Bridge", "Street", "Department",
             "College", "University" }; // words that would indicate it's not part of a name
@@ -62,7 +62,7 @@ public class FeatureSet {
      * @param word the word to be evaluated
      */
     private void determineIfFirstName(String word) {
-        featureValues.put("First Name", firstNames.contains(word) ? 1 : 0);
+        featureValues.put("First Name", firstNames.contains(word.toUpperCase()) ? 1 : 0);
     }
 
     /**
@@ -145,12 +145,17 @@ public class FeatureSet {
         return featureValues.getOrDefault(feature, -1);
     }
 
+    /**
+     * Reads names from a file and adds to the firstNames set
+     * @param fnameFile File to be read from
+     * @throws FileNotFoundException first name file is not found
+     */
     public void readNamesFromFirstNameFile(File fnameFile) throws FileNotFoundException {
         Scanner scanner = new Scanner(fnameFile);
 
         while (scanner.hasNext()) {
             String name = scanner.nextLine();
-            firstNames.add(name);
+            firstNames.add(name.toUpperCase());
         }
     }
 
