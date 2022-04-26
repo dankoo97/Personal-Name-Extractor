@@ -1,0 +1,7 @@
+institute
+memorial
+bridge
+street
+department
+college
+university

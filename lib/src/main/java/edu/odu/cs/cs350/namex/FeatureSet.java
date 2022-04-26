@@ -12,9 +12,8 @@ public class FeatureSet {
 
     private static Set<String> firstNames = new HashSet<>();
     private static Set<String> lastNames = new HashSet<>();
-    private static String[] articles = new String[] { "a", "an", "the" };
-    private static String[] killWords = new String[] { "Institute", "Memorial", "Bridge", "Street", "Department",
-            "College", "University" }; // words that would indicate it's not part of a name
+    private static Set<String> articles = new HashSet<>();
+    private static Set<String> killWords = new HashSet<>();
     private static String[] honorifics = new String[] { "Mr.", "Ms.", "Mrs.", "Dr." };
     private static String[] suffixes = new String[] { "Sr.", "Jr.", "I", "II", "III", "IV", "V" };
 
@@ -44,15 +43,7 @@ public class FeatureSet {
      * @param word the word to be evaluated
      */
     private void determineIfArticle(String word) {
-        for (String article : articles) {
-            if (article.equalsIgnoreCase(word))
-                featureValues.put("Article", 1); // 1 indicates it's an article
-        }
-
-        // if it exits the loop and hasn't put a value in map, put in
-        // a zero to indicate it's not an article
-        if (!featureValues.containsKey("Article"))
-            featureValues.put("Article", 0);
+        featureValues.put("Is Article", articles.contains(word.toUpperCase()) ? 1 : 0);
     }
 
     /**
@@ -72,13 +63,7 @@ public class FeatureSet {
      * @param word the word to be evaluated
      */
     private void determineIfLastName(String word) {
-        for (String lastName : lastNames) {
-            if (lastName.equalsIgnoreCase(word))
-                featureValues.put("Last Name", 1);
-        }
-
-        if (!featureValues.containsKey("Last Name"))
-            featureValues.put("Last Name", 0);
+        featureValues.put("Last Name", lastNames.contains(word.toUpperCase()) ? 1 : 0);
     }
 
     /**
@@ -146,12 +131,13 @@ public class FeatureSet {
     }
 
     /**
-     * Reads names from a file and adds to the firstNames set
+     * Creates a set of first names from a given file, clears previous contents of firstNames
      * @param fnameFile File to be read from
      * @throws FileNotFoundException first name file is not found
      */
-    public void readNamesFromFirstNameFile(File fnameFile) throws FileNotFoundException {
+    public static void readNamesFromFirstNameFile(File fnameFile) throws FileNotFoundException {
         Scanner scanner = new Scanner(fnameFile);
+        firstNames.clear();
 
         while (scanner.hasNext()) {
             String name = scanner.nextLine();
@@ -159,4 +145,48 @@ public class FeatureSet {
         }
     }
 
+    /**
+     * Creates a set of last names from a given file, clears previous contents of lastNames
+     * @param lnameFile File to be read from
+     * @throws FileNotFoundException last name file is not found
+     */
+    public static void readNamesFromLastNameFile(File lnameFile) throws FileNotFoundException {
+        Scanner scanner = new Scanner(lnameFile);
+        lastNames.clear();
+
+        while (scanner.hasNext()) {
+            String name = scanner.nextLine();
+            lastNames.add(name.toUpperCase());
+        }
+    }
+
+    /**
+     * Creates a set of articles from a given file, clears previous contents of articles
+     * @param articlesFile File to be read from
+     * @throws FileNotFoundException articles file is not found
+     */
+    public static void readNamesFromArticlesFile(File articlesFile) throws FileNotFoundException {
+        Scanner scanner = new Scanner(articlesFile);
+        articles.clear();
+
+        while (scanner.hasNext()) {
+            String name = scanner.nextLine();
+            articles.add(name.toUpperCase());
+        }
+    }
+
+    /**
+     * Creates a set of kill words from a given file, clears previous contents of killWords
+     * @param killWordsFile File to be read from
+     * @throws FileNotFoundException kill words file is not found
+     */
+    public static void readNamesFromKillWordsFile(File killWordsFile) throws FileNotFoundException {
+        Scanner scanner = new Scanner(killWordsFile);
+        killWords.clear();
+
+        while (scanner.hasNext()) {
+            String killWord = scanner.nextLine();
+            killWords.add(killWord.toUpperCase());
+        }
+    }
 }
