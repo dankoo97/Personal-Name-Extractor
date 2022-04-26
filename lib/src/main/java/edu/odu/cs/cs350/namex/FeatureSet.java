@@ -3,6 +3,8 @@ package edu.odu.cs.cs350.namex;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 //import javax.lang.model.util.ElementScanner14;
 
@@ -14,8 +16,8 @@ public class FeatureSet {
     private static Set<String> lastNames = new HashSet<>();
     private static Set<String> articles = new HashSet<>();
     private static Set<String> killWords = new HashSet<>();
-    private static String[] honorifics = new String[] { "Mr.", "Ms.", "Mrs.", "Dr." };
-    private static String[] suffixes = new String[] { "Sr.", "Jr.", "I", "II", "III", "IV", "V" };
+    private static Set<String> honorifics = new HashSet<>();
+    private static Set<String> suffixes = new HashSet<>();
 
     public FeatureSet() {
 
@@ -73,13 +75,7 @@ public class FeatureSet {
      * @param word the word to be evaluated
      */
     private void determineIfKillWord(String word) {
-        for (String killWord : killWords) {
-            if (killWord.equalsIgnoreCase(word))
-                featureValues.put("Kill Word", 1);
-        }
-
-        if (!featureValues.containsKey("Kill Word"))
-            featureValues.put("Kill Word", 0);
+        featureValues.put("Is Kill Word", killWords.contains(word.toUpperCase()) ? 1 : 0);
     }
 
     /**
@@ -90,13 +86,7 @@ public class FeatureSet {
      */
 
     private void determineIfHonorific(String word) {
-        for (String honorific : honorifics) {
-            if (honorific.equalsIgnoreCase(word))
-                featureValues.put("Honorific", 1);
-        }
-
-        if (!featureValues.containsKey("Honorific"))
-            featureValues.put("Honorific", 0);
+        featureValues.put("Honorific", honorifics.contains(word.toUpperCase()) ? 1 : 0);
     }
 
     /**
@@ -106,13 +96,15 @@ public class FeatureSet {
      * @param word the word to be evaluated
      */
     private void determineIfSuffix(String word) {
-        for (String suffix : suffixes) {
-            if (suffix.equalsIgnoreCase(word))
-                featureValues.put("Suffix", 1);
+        if (suffixes.contains(word)) {
+            featureValues.put("Is Suffix", 1);
+        } else {
+            // Roman Numeral pattern matcher
+            // TODO: Test roman numeral patterns
+            Pattern pattern = Pattern.compile("(IX{1,3}|X{0,3}(I?V|V?I{0,3}))", Pattern.CASE_INSENSITIVE);
+            Matcher matcher = pattern.matcher(word);
+            featureValues.put("Is Suffix", matcher.matches() ? 1 : 0);
         }
-
-        if (!featureValues.containsKey("Suffix"))
-            featureValues.put("Suffix", 0);
     }
 
     /**
@@ -187,6 +179,36 @@ public class FeatureSet {
         while (scanner.hasNext()) {
             String killWord = scanner.nextLine();
             killWords.add(killWord.toUpperCase());
+        }
+    }
+
+    /**
+     * Creates a set of honorifics from a given file, clears previous contents of honorifics
+     * @param honorificsFile File to be read from
+     * @throws FileNotFoundException honorifics file is not found
+     */
+    public static void readNamesFromHonorificsFile(File honorificsFile) throws FileNotFoundException {
+        Scanner scanner = new Scanner(honorificsFile);
+        honorifics.clear();
+
+        while (scanner.hasNext()) {
+            String honorific = scanner.nextLine();
+            honorifics.add(honorific.toUpperCase());
+        }
+    }
+
+    /**
+     * Creates a set of suffixes from a given file, clears previous contents of suffixes
+     * @param suffixesFile File to be read from
+     * @throws FileNotFoundException suffix file is not found
+     */
+    public static void readNamesFromSuffixesFile(File suffixesFile) throws FileNotFoundException {
+        Scanner scanner = new Scanner(suffixesFile);
+        suffixes.clear();
+
+        while (scanner.hasNext()) {
+            String suffix = scanner.nextLine();
+            suffixes.add(suffix.toUpperCase());
         }
     }
 }
